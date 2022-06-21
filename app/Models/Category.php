@@ -12,4 +12,8 @@ class Category extends Model
     public $timestamps = false;
 
     protected $table = 'category';
+    public function bookCate()
+    {
+        return $this->hasMany(Book::class);
+    }
 }

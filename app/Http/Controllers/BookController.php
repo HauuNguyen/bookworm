@@ -8,24 +8,53 @@ use App\Repositories\BookRepositories;
 
 class BookController extends Controller
 {
-    // private BookRepositories $Bookrepositories ;
-    // public function __construct(BookRepositories $Bookrepositories)
-    // {
-    //     $this->BookRepositories = $Bookrepositories ;
-    // }
+    private BookRepositories $book ;
+    public function __construct(BookRepositories $Bookrepositories)
+    {
+        $this->book = $Bookrepositories ;
+    }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index($id=null)
-    {   $book = new BookRepositories();
-        return response($book->getById($id));
+    {   
+        return response($this->book->getById($id));
     }
+
     public function review($book_id=null,$review_id=null)
-    {   $book = new BookRepositories();
-        return response($book->getReview($book_id,$review_id));
+    { 
+        return response($this->book->getReview($book_id,$review_id));
     }
+    public function getCategories()
+    {
+        $category = new BookRepositories();
+        return response($category->getCategories());
+    }
+
+    public function getBooksOfCategory($category_id)
+    {
+        $cate = new BookRepositories();
+        return response($cate->getAllBookOfCate($category_id));
+    }
+
+    public function getAuthors()
+    {
+        $author = new BookRepositories();
+        return response($author->getAllAuthors());
+    }
+
+    public function getBooksOfAuthor($author_id)
+    {
+        $auth = new BookRepositories();
+        return response($auth->getAllBooksOfAuthor($author_id));
+    }
+
+    // public function sortByPrice(){
+    //     $book = new BookRepositories();
+    //     return response($book->sortByPriceHighToLow());
+    // }
 
     // /**
     //  * Show the form for creating a new resource.

@@ -12,6 +12,7 @@ class BookController extends Controller
     public function __construct(BookRepositories $Bookrepositories)
     {
         $this->book = $Bookrepositories ;
+
     }
     /**
      * Display a listing of the resource.
@@ -27,10 +28,13 @@ class BookController extends Controller
     { 
         return response($this->book->getReview($book_id,$review_id));
     }
+    public function getAverageRating($book_id)
+    {
+        return response($this->book->getAvgRating($book_id));
+    }
     public function getCategories()
     {
-        $category = new BookRepositories();
-        return response($category->getCategories());
+        return response($this->book->getCategories());
     }
 
     public function getBooksOfCategory($category_id)
@@ -50,7 +54,20 @@ class BookController extends Controller
         $auth = new BookRepositories();
         return response($auth->getAllBooksOfAuthor($author_id));
     }
+    public function getTopDiscount()
+    {
+        return response($this->book->getTop10DiscountBooks());
+    }
 
+    public function getRecommend()
+    {
+        return response($this->book->getRecommendBooks());
+    }
+    
+    public function getBookprice()
+    {
+        return response($this->book->topRecommend());
+    }
     // public function sortByPrice(){
     //     $book = new BookRepositories();
     //     return response($book->sortByPriceHighToLow());

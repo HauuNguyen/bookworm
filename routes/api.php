@@ -19,11 +19,15 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('books/{id?}',[BookController::class,'index']);
+
+Route::get('books/discount/','BookController@getTopDiscount');
 Route::get('books/{id}/reviews/{book_id?}','BookController@review');
 Route::get('books/sort',[BookController::class,'sortByPrice']);
 Route::get('categories/','BookController@getCategories');
 Route::get('category/{category_id}/books','BookController@getBooksOfCategory');
 Route::get('authors/','BookController@getAuthors');
 Route::get('author/{author_id}/books','BookController@getBooksOfAuthor');
+Route::get('book/{book_id}/rating','BookController@getAverageRating');
+Route::get('recommend/books/','BookController@getRecommend');
+Route::get('books/{id?}',[BookController::class,'index']);
 //Route::get('books','BookController@index');

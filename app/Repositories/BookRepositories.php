@@ -67,42 +67,147 @@ class BookRepositories {
     }
     public function getTop10DiscountBooks(){
         $discount =  $this->query
-            -> join('discount','discount.book_id','=','book.id')
-            -> selectRaw('book.*,(book.book_price-discount.discount_price) as getdiscount')
-            -> where([  [  'discount.discount_start_date','<=',today()],
-                        [  'discount.discount_end_date','>=',today()],])
-            -> orwhere([[  'discount.discount_start_date','<=',today()], 
-                        [  'discount.discount_end_date','=',null],])
-            -> orderBy('getdiscount','desc')
-            -> take(10)
-            -> get();
+        -> join('discount','discount.book_id','=','book.id')
+        -> selectRaw('book.*,(book.book_price-discount.discount_price) as getdiscount')
+        -> where([  [  'discount.discount_start_date','<=',today()],
+                    [  'discount.discount_end_date','>=',today()],])
+        -> orwhere([[  'discount.discount_start_date','<=',today()], 
+                    [  'discount.discount_end_date','=',null],])
+        -> orderBy('getdiscount','desc')
+        -> take(10)
+        -> get();
         return $discount;
     } 
-
-
-    public function getRecommendBooks(){
-        $recommend = $this->query
-            -> join('review','book.id','=','review.book_id')
-            -> select('book.*',DB::raw('round(AVG(rating_start),1) as averagestar'))
-            -> groupBy('book.id')
-            -> orderBy('averagestar','desc')
-            -> take(8)
-            -> get();
-        return $recommend ;
-    } 
-    public function topRecommend()
+    
+    public function finalPrice()
     {
         $bookrcm = $this->query 
-            ->  join('discount','book.id','=','discount.book_id')
-            ->  selectRaw(
-                'case   when    discount.discount_start_date <= current_date
+            ->  leftJoin('discount','book.id','=','discount.book_id')
+            ->  selectRaw('book.id,
+                (case  when    discount.discount_start_date <= current_date
                         and (   discount.discount_end_date >= current_date or 
                                 discount.discount_end_date is null )    
                         then discount.discount_price
-                        else book.book_price    
+                        else book.book_price end  ) as finalprice
                 '
             );
             return $bookrcm ;
     }
 
-}
+    public function getRecommendBooks(){
+
+        $recommend = $this->query
+            ->join('review','book.id','=','review.book_id')
+            -> select('book.id',DB::raw('round(AVG(rating_start),1) as averagestar'))
+            -> groupBy('book.id');
+        
+        $sub = $this->query 
+        -> joinSub($recommend,'recommend',function ($join){
+            $join-> on('recommend.id','=','book.id') ;
+        })
+        ->  leftJoin('discount','book.id','=','discount.book_id')
+        ->  selectRaw('     book.id,book.book_price,recommend.averagestar ,
+                            (case   when    discount.discount_start_date <= current_date
+                                    and (   discount.discount_end_date >= current_date or 
+                                            discount.discount_end_date is null )    
+                                    then discount.discount_price
+                                    else book.book_price end  ) as finalprice     ' )
+
+        ->groupBy('book.id','recommend.averagestar','finalprice')
+        -> orderBy('recommend.averagestar','desc')->orderby('finalprice')
+        ->take(8)
+        -> get();
+        return $sub ;
+        // $recommend = $this->query
+        //     -> join('review','book.id','=','review.book_id')
+        //     -> select('book.*',DB::raw('round(AVG(rating_start),1) as averagestar'))
+        //     -> groupBy('book.id')
+        //     -> orderBy('averagestar','desc')
+        //     -> get();
+        // return $recommend ;
+    } 
+
+    public function getMostPopularBooks(){
+        $mostreview = $this -> query
+            -> leftjoin('review','review.book_id','=','book.id')
+            -> select('book.id',DB::raw('COUNT(review.book_id) as total_review'))
+            -> groupBy('book.id') ;
+        $sub = $this->query 
+        -> joinSub($mostreview,'mostreview',function ($join){
+            $join-> on('mostreview.id','=','book.id') ;
+        })
+        ->  leftJoin('discount','book.id','=','discount.book_id')
+        ->  selectRaw('     book.id,book.book_price,mostreview.total_review ,
+                            (case   when    discount.discount_start_date <= current_date
+                                    and (   discount.discount_end_date >= current_date or 
+                                            discount.discount_end_date is null )    
+                                    then discount.discount_price
+                                    else book.book_price end  ) as finalprice     ' )
+
+        ->  groupBy('book.id','mostreview.total_review','finalprice')
+        ->  orderBy('mostreview.total_review','desc')->orderby('finalprice')
+        ->  take(8)
+        ->  get() ;
+        return $sub ;
+    }
+    public function sortBySale(){
+         return  $this->query
+        ->  leftJoin('discount','book.id','=','discount.book_id')
+        ->  selectRaw('     book.id,
+                             (case   when    discount.discount_start_date <= current_date
+                                     and (   discount.discount_end_date >= current_date or 
+                                             discount.discount_end_date is null )    
+                                     then discount.discount_price
+                                     else book.book_price end  ) as finalprice ,
+                                     (case   when    discount.discount_start_date <= current_date
+                                     and (   discount.discount_end_date >= current_date or 
+                                             discount.discount_end_date is null )    
+                                     then (book.book_price-discount.discount_price)
+                                     else 0 end  ) as sub    ' )
+ 
+        -> groupBy('book.id','finalprice', 'sub')
+        ->  orderBy('sub','desc')->orderBy('finalprice')
+        ->  get();
+    }
+    public function sortByPopular(){
+        $mostreview = $this -> query
+            -> leftjoin('review','review.book_id','=','book.id')
+            -> select('book.id',DB::raw('COUNT(review.book_id) as total_review'))
+            -> groupBy('book.id') ;
+        $sub = $this->query 
+        -> joinSub($mostreview,'mostreview',function ($join){
+            $join-> on('mostreview.id','=','book.id') ;
+        })
+        ->  leftJoin('discount','book.id','=','discount.book_id')
+        ->  selectRaw('     book.id,book.book_price,mostreview.total_review ,
+                            (case   when    discount.discount_start_date <= current_date
+                                    and (   discount.discount_end_date >= current_date or 
+                                            discount.discount_end_date is null )    
+                                    then discount.discount_price
+                                    else book.book_price end  ) as finalprice     ' )
+
+        ->  groupBy('book.id','mostreview.total_review','finalprice')
+        ->  orderBy('mostreview.total_review','desc')->orderby('finalprice')
+        ->  get() ;
+        return $sub ;       
+    }
+
+    public function sortByPriceLowToHigh(){
+        $sort = $this -> finalPrice() ;
+        return $this->query
+        -> joinSub($sort,'sort',function ($join){
+            $join-> on('sort.id','=','book.id') ;
+        })
+        ->orderBy('sort.finalprice')
+        ->get();
+    }
+    public function sortByPriceHighToLow(){
+        $sort = $this -> finalPrice() ;
+        return $this->query
+        -> joinSub($sort,'sort',function ($join){
+            $join-> on('sort.id','=','book.id') ;
+        })
+        ->orderBy('sort.finalprice','desc')
+        ->get();
+    }
+} 

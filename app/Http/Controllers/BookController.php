@@ -64,15 +64,26 @@ class BookController extends Controller
         return response($this->book->getRecommendBooks());
     }
     
-    public function getBookprice()
+    public function getBooksFinalPrice()
     {
-        return response($this->book->topRecommend());
+        return response($this->book->finalPrice());
     }
-    // public function sortByPrice(){
-    //     $book = new BookRepositories();
-    //     return response($book->sortByPriceHighToLow());
-    // }
-
+    public function topMostReview()
+    {
+        return response($this->book->getMostPopularBooks());
+    }
+    public function sortBySale(){
+        return response($this->book->sortBySale());
+    }
+    public function sortByPopular(){
+        return response($this->book->sortByPopular());
+    }
+    public function sortPriceLTH(){
+        return response($this->book->sortByPriceLowToHigh());
+    }
+    public function sortPriceHTL(){
+        return response($this->book->sortByPriceHighToLow());
+    }
     // /**
     //  * Show the form for creating a new resource.
     //  *

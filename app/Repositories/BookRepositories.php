@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\Author ;
 use App\Models\Discount;
 use App\Models\Review;
+use GuzzleHttp\Psr7\Request;
 use Illuminate\Support\Facades\DB;
 
 class BookRepositories {
@@ -24,7 +25,7 @@ class BookRepositories {
         if($id){
             return $this->query->find($id);
         }
-        return $this->query->get(); //all ??
+        return $this->query->paginate(12); //all ??
     }
     public function getReview($book_id,$review_id)
     {
@@ -37,9 +38,24 @@ class BookRepositories {
     public function getAvgRating($book_id){
         return $this->review->where('book_id',$book_id)->avg('rating_start');
     }
-
+    public function getListOfRating($num_star){
+        $avg = $this->query
+        ->  join('review','book.id','=','review.book_id')
+        ->  select('book.id',DB::raw('round(AVG(rating_start),1) as averagestar'))
+        ->  groupBy('book.id');
+        $sub = $this->query 
+        -> joinSub($avg,'avg',function ($join){
+            $join-> on('avg.id','=','book.id') ;
+        })
+        ->select('book.*','avg.averagestar')
+        -> where([  [  'avg.averagestar','>=',$num_star   ],
+                    [  'avg.averagestar','<',1+$num_star],])
+        ->groupBy('avg.averagestar','book.id')
+        -> get();
+        return $sub ;
+    }
     public function getCategories(){
-        //return $this -> category->orderBy('category_name')->get(); //Get id of Cate
+        //return $this->category->orderBy('category_name')->get(); //Get id of Cate
         $cate = $this->query
         -> join('category','book.category_id','=','category.id')
         -> select('category.category_name')->distinct()
@@ -209,5 +225,13 @@ class BookRepositories {
         })
         ->orderBy('sort.finalprice','desc')
         ->get();
+    }
+
+    public function filterBook(Request $request){
+        $bookquery = Book::with(['bookCategory','bookReview'])->get();
+        if($request->id){
+            $bookquery -> where('id','=',$request->id);
+        }
+        return $bookquery;
     }
 } 

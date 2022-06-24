@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\Book ;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Repositories\BookRepositories;
@@ -83,6 +83,32 @@ class BookController extends Controller
     }
     public function sortPriceHTL(){
         return response($this->book->sortByPriceHighToLow());
+    }
+
+    // public function filterBook(Request $request){
+    //     return response($this->book->filterBook($request->id));
+    // }
+    public function getListOfRating($num_star){
+        return response($this->book->getListOfRating($num_star));
+    }
+    public function filterBook(Request $request){
+        $bookquery = Book::with(['bookCategory','author']);
+        if($request->id){
+            $bookquery -> where('book.id','=',$request->id);
+        }
+        if($request->category_id){
+            $bookquery ->where('book.category_id','=',$request->category_id);
+        }
+        if($request->author_id){
+            $bookquery ->where('book.author_id','=',$request->author_id);
+        }
+
+        if($request->rating_start){
+            $bookquery -> whereHas('bookReview',function($query) use($request){
+                $query->where('review.rating_start',$request->rating_start);
+            });
+        }
+        return $bookquery->get();
     }
     // /**
     //  * Show the form for creating a new resource.

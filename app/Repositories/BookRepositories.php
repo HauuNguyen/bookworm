@@ -7,7 +7,6 @@ use App\Models\Category;
 use App\Models\Author ;
 use App\Models\Discount;
 use App\Models\Review;
-use GuzzleHttp\Psr7\Request;
 use Illuminate\Support\Facades\DB;
 
 class BookRepositories {
@@ -48,9 +47,10 @@ class BookRepositories {
             $join-> on('avg.id','=','book.id') ;
         })
         ->select('book.*','avg.averagestar')
-        -> where([  [  'avg.averagestar','>=',$num_star   ],
-                    [  'avg.averagestar','<',1+$num_star],])
+        -> where('avg.averagestar','>=',$num_star)
+                    //[  'avg.averagestar','<',1+$num_star],])
         ->groupBy('avg.averagestar','book.id')
+        ->orderBy('avg.averagestar')
         -> get();
         return $sub ;
     }
@@ -225,13 +225,5 @@ class BookRepositories {
         })
         ->orderBy('sort.finalprice','desc')
         ->get();
-    }
-
-    public function filterBook(Request $request){
-        $bookquery = Book::with(['bookCategory','bookReview'])->get();
-        if($request->id){
-            $bookquery -> where('id','=',$request->id);
-        }
-        return $bookquery;
     }
 } 

@@ -100,6 +100,17 @@ class BookController extends Controller
         ->selectRaw('book.id, round(avg(review.rating_start),2) AS averagestar')
         ->groupBy('book.id');
     }
+    // public function starPrice(){
+    //     $star = $this->query
+    //         ->join('review','book.id','=','review.book_id')
+    //         -> select('book.id',DB::raw('round(AVG(rating_start),1) as averagestar'))
+    //         -> groupBy('book.id');
+    //     return $this->query
+    //     ->joinSub($star,'star',function ($joinstar){
+    //         $joinstar-> on('star.id','=','book.id') ;
+    //     })  
+        
+    // }
     public function filterBook(Request $request){
         $finalprice = $this->query 
         ->  leftJoin('discount','book.id','=','discount.book_id')
@@ -151,10 +162,10 @@ class BookController extends Controller
             // ->get()
             //->leftjoin('review','review.book_id','=','book.id')
             ->where('star.averagestar','>=',$request->rating_star)
-            ->groupBy('book.id','finalprice.finalprice')
+            ->groupBy('book.id','finalprice.finalprice','star.averagestar')
             ->get()
         ;}
-    }
+    }   
 
         // $bookquery = Book::with(['bookCategory']);
         // if($request->id){

@@ -3,7 +3,7 @@
 use App\Http\Controllers\BookController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\AuthController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -46,3 +46,9 @@ Route::get('filter',[BookController::class,'filterBook']);
 Route::get('filtering',[BookController::class,'getFiltering']);
 
 //Route::get('books','BookController@index');
+Route::group([
+    'prefix' => 'auth'
+], function() {
+    Route::post('login',[AuthController::class,'login']);
+    Route::post('register',[AuthController::class,'register']);
+});

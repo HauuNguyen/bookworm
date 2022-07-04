@@ -4,6 +4,7 @@ import Header from './Header' ;
 import Home from '../components/home/homepage';
 import {HashRouter, Route, Routes} from 'react-router-dom';
 import Footer from './Footer';
+import About from './About';
 
 ReactDOM.render( 
     
@@ -11,6 +12,7 @@ ReactDOM.render(
         <Header />
         <Routes>
             <Route path = "/homepage" element={<Home />}></Route>
+            <Route path = "/aboutus" element={<About />}></Route>
         </Routes>
         <Footer />
     </HashRouter>,

@@ -20,10 +20,10 @@ function Header() {
                             BOOKWORM
                 </Navbar.Brand>
                 <Nav>
-                    <Nav.Link href="#">Home</Nav.Link>
+                    <Nav.Link href="#">Home</Nav.Link>  
+                    <Nav.Link href="#">Shop</Nav.Link>
                     <Nav.Link href="#">About</Nav.Link>
                     <Nav.Link href="#">Cart</Nav.Link>
-                    <Nav.Link href="#">Home</Nav.Link>
                     <Button variant="primary">Sign in</Button>{' '} 
                 </Nav>  
                 

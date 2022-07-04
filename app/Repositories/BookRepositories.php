@@ -106,7 +106,9 @@ class BookRepositories {
                         then discount.discount_price
                         else book.book_price end  ) as finalprice
                 '
-            );
+            )
+            ->groupBy('book.id','finalprice')
+            ->get();
             return $bookrcm ;
     }
 

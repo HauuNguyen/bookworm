@@ -32,48 +32,7 @@ use Illuminate\Support\Facades\Validator;
         $user->save();
         return response()->json(['message'=>'User has been registered'],200);
     }
-    // public function login(Request $request){
-    //     $user = User::where('email', $request->email)->first();
-    //     $password = md5($request->password);
-    //     if($user->password != $password){ //  !$user || !Hash::check($request->password, $user->password, [])
-    //         return response()->json(
-    //             [
-    //                 'message' => 'User not exist!',
-    //             ],
-    //             404
-    //         );
-    //     }
-    //     $token = $user->createToken('authToken')->plainTextToken;
-    //     return response()->json(
-    //         [
-    //             'access_token' => $token,
-    //             'type_token' => 'Bearer',
-    //             'message' =>'Login successfully'
-    //         ],
-    //         200
-    //     );
 
-    // }
-    // public function login(Request $request){
-    //     $request ->validate([
-    //         'email'     =>'required',
-    //         'password'  =>'required|string'
-    //     ]);
-        
-    //     $credentials = request(['email','password']);
-    //     if (!Auth::attempt($credentials)){
-    //         return response()->json(['message'=>'UnAuthorized'],401);
-    //     }
-    //     $user = $request->user();
-    //     $tokenResult = $user ->createToken('Personal Access Token')->plainTextToken;
-    //     $token = $tokenResult->token ;
-    //     $token->save() ;
-    //     return response()->json(['data'=>[
-    //         'user'          => Auth::user(),
-    //         'access_token'  => $tokenResult->accessToken,
-    //         'token_type'    =>'Bearer',
-    //                 ]]);
-    // }
     public function login(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -101,40 +60,18 @@ use Illuminate\Support\Facades\Validator;
     }
 
 
-    // public function login(Request $request) {
-    //     $fields = $request->validate([
-    //         'email' => 'required|string',
-    //         'password' => 'required|string'
-    //     ]);
 
-    //     // Check email
-    //     $user = User::where('email', $fields['email'])->first();
+    public function logout(User $user){
 
-    //     // Check password
-    //     if(!$user || !Hash::check($fields['password'], $user->password)) {
-    //         return response([
-    //             'message' => 'Email or Password Incorrect'
-    //         ], 401);
-    //     }
+        $user->tokens()->delete();
 
-    //     $token = $user->createToken('myapptoken')->plainTextToken;
-
-    //     $response = [
-    //         'user' => $user,
-    //         'token' => $token
-    //     ];
-
-    //     return response($response, 201);
-    // }
-    public function logout(Request $request) {
-        $request->Auth::user()->token()->revoke();
-        return response()->json([
-            'message'   =>  'Successfully logged out.'
-        ]);
+        return [
+            'message' => 'Logged out'
+        ];
     }
     public function me()
     {
-        return  Auth::user();
+        return Auth::guard('sanctum')->user();
     }
 
 }

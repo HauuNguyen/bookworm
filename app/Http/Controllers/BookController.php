@@ -167,32 +167,6 @@ class BookController extends Controller
         ;}
     }   
 
-        // $bookquery = Book::with(['bookCategory']);
-        // if($request->id){
-        //     $bookquery -> where('book.id','=',$request->id);
-        // }
-        // if($request->category_id){
-        //     $bookquery ->where('book.category_id','=',$request->category_id);
-        // }
-        // if($request->author_id){
-        //     $bookquery ->where('book.author_id','=',$request->author_id);
-        // }
-
-        // if($request->rating_start){
-        //         $avg = $this->query
-        //         ->join('review','review.book_id','=','book.id')
-        //         ->selectRaw('book.id, round(avg(review.rating_start),2) AS averagestar')
-        //         ->groupBy('book.id');
-        //         $bookquery
-        //         -> joinSub($avg,'avg',function ($join){
-        //             $join-> on('avg.id','=','book.id') ;
-        //         })
-        //         ->select('book.*','avg.averagestar')
-        //         -> where([    'avg.averagestar','>=',$request->rating_start   ])
-        //                     //[  'avg.averagestar','<',1+$num_star],])
-        //         ->groupBy('avg.averagestar','book.id');
-        // }
-
     public function getFiltering(Request $request){
     //    $book = Book::with(['category','author']);
         

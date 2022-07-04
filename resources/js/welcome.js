@@ -14,6 +14,6 @@ class Welcome extends Component {
             </main>
         );
     }
-}
+}  
 
 export default Welcome;

@@ -71,7 +71,7 @@ class BookController extends Controller
     {
         return response($this->book->finalPrice());
     }
-    public function topMostReview()
+    public function topMostPopular()
     {
         return response($this->book->getMostPopularBooks());
     }

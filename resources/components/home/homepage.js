@@ -1,98 +1,159 @@
 import "./homepage.css";
 import { Button } from 'reactstrap';
-import Book1 from '../../assets/bookcover/book1.jpg';
-import Book2 from '../../assets/bookcover/book2.jpg';
-import Book3 from '../../assets/bookcover/book3.jpg';
-import Book4 from '../../assets/bookcover/book4.jpg';
-import Book5 from '../../assets/bookcover/book5.jpg';
-import Book6 from '../../assets/bookcover/book6.jpg';
-import Book7 from '../../assets/bookcover/book7.jpg';
-import Book8 from '../../assets/bookcover/book8.jpg';
-import Book9 from '../../assets/bookcover/book9.jpg';
-import Book10 from '../../assets/bookcover/book10.jpg';
 
-import React from "react";
+
+import React, {Component} from "react";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Autoplay } from "swiper";
 import "swiper/css/navigation";
 import 'swiper/css';
+import axios from "axios";
+import { bookCoverPhoto } from "../../js/bookcoverphoto";
 
 
-const arraySrcBook = [Book1, Book2, Book3, Book4, Book5, Book6, Book7, Book8, Book9, Book10]
+class Home extends Component {
+    state = {
+        books:[],
+        rcm:[],
+        ppl:[]
+    }
+    async componentDidMount(){
+        const discount = await axios.get('http://127.0.0.1:8000/api/books/discount').then(respone=>{
+            this.setState({books:respone.data});
+        });
+        const recommend = await axios.get('http://127.0.0.1:8000/api/recommend/books').then(respone=>{
+            this.setState({rcm:respone.data});
+        });
+        const poppular = await axios.get('http://127.0.0.1:8000/api/popular/books').then(respone=>{
+            this.setState({ppl:respone.data});
+        });
+        await Promise.all([discount,recommend,poppular]);
+    }
+    render(){
 
-function Home() {
-return (
-<section className="home-page">
-    <div className="container">
-        <div className="row align-items-center mb-4">
-            <div className="col-lg-6">
-                <p>On Sale</p>
-            </div>
-            <div className="col-lg-6 d-flex justify-content-end">
-                <Button color="secondary" size="sm">
-                    View All &nbsp; <i class="fas fa-angle-right"></i> 
-                </Button>
-            </div>
-        </div>
-        <Swiper 
-            spaceBetween={50} 
-            slidesPerView={4} 
-            navigation={true} 
-            loop={true}
-            loopFillGroupWithBlank={true}
-            modules={[Autoplay, Navigation]}
-            autoplay={{
-                delay: 2500,
-                disableOnInteraction: false,
-            }}
-        >
-            {
-            arraySrcBook.map(book => {
-            return (
-                <SwiperSlide key={book} className="carousel">
-                    <div className="card">
-                        <img className="card-img-top img-fluid" src={book} alt="Books" />
-                        <div className="card-body">
-                            <p className="book-title font-18px">Book title</p>
-                            <p className="book-author font-14px">Author Name</p>
-                        </div>
-                        <div className="card-footer text-muted font-14px">Price</div>
-                    </div>
-                </SwiperSlide>)})
-            }
-        </Swiper>
-        <div className="book-list">
-            <div className="text-center">
-                <p className="section-title font-20px mb-3">Featured Books</p>
-                <div className="mb-4">
-                    <Button color="secondary">
-                        Recommended
+
+    return (
+    <section className="home-page">
+        <div className="container">
+            <div className="row align-items-center mb-4">
+                <div className="col-lg-6">
+                    <h4>On Sale</h4>
+                </div>
+                <div className="col-lg-6 d-flex justify-content-end">
+                    <Button color="primary" size="sm" href="/#/aboutus">
+                        View All &nbsp; <i class="fas fa-angle-right"></i> 
                     </Button>
-                    <a className="custom-link">Popular</a>
                 </div>
             </div>
-            <div id="mainRow" className="row">
+            <Swiper 
+                spaceBetween={50} 
+                slidesPerView={4} 
+                navigation={true} 
+                loop={true}
+                loopFillGroupWithBlank={true}
+                modules={[Autoplay, Navigation]}
+                autoplay={{
+                    delay: 2500,
+                    disableOnInteraction: false,
+                }}
+            >
                 {
-                arraySrcBook.map(book => {
-                return (
-                <div className="col-lg-3 col-md-4 col-sm-6 mb-4" key={book}>
-                    <div className="card">
-                        <img className="card-img-top img-fluid" src={book} alt="Books" />
-                        <div className="card-body">
-                            <p className="book-title font-18px">Book title</p>
-                            <p className="book-author font-14px">Author Name</p>
-                        </div>
-                        <div className="card-footer text-muted font-14px">Price</div>
+                //arraySrcBook2.map(book => {   
+                this.state.books.map(book=>{
+                    return (
+                        <SwiperSlide key={book} className="carousel">
+                            {/* <div className="card">
+                                <div className="card p-2">
+                                <a className="card-block stretched-link text-decoration-none text-dark" href="#">
+                                <img className="card-img-top img-fluid" src={bookCoverPhoto[book.book_cover_photo]} alt="Books" />
+                                <div className="card-body">
+                                    <p className="book-title font-18px">{book.book_title}</p>
+                                    <p className="book-author font-14px">{book.author_name}</p>
+                                </div>
+                                <div className="card-footer text-muted font-14px"><strike>{book.book_price}$</strike>&nbsp;<b>{book.getdiscount}$</b></div>
+        
+                                </a>
+                            </div>
+                            </div> */}
+                            <div className="card">
+                                <img className="card-img-top img-fluid" src={bookCoverPhoto[book.book_cover_photo]} alt="Books" />
+                                <div className="card-body">
+                                    <a href="#" className="text-decoration-none"><p className="book-title font-18px">{book.book_title}</p></a>
+                                    <p className="book-author font-14px">{book.author_name}</p>
+                                </div>
+                                <div className="card-footer text-muted font-14px"><strike>{book.book_price}$</strike>&nbsp;<b>{book.getdiscount}$</b></div>
+                            </div>
+                        </SwiperSlide>)})
+                })
+
+            </Swiper>
+            <div className="book-list">
+                <div className="text-center">
+                    <p className="section-title font-20px mb-3"><h4>Featured Books</h4></p>
+                    <div className="mb-4">
+                    <p>
+                        <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                            Recommend
+                        </a> &ensp;
+                        <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample1" aria-expanded="false" aria-controls="collapseExample1">
+                            Popular
+                        </button>
+                        </p>
                     </div>
                 </div>
-                )
-                })
-                }
+                    <div class="collapse" id="collapseExample">
+                            <p>8 Most recommend books</p>
+                            <div class="card card-body">
+                            <div id="mainRow" className="row">
+                                {
+                                    this.state.rcm.map(book1 => {
+                                        return (
+                                        <div className="col-lg-3 col-md-4 col-sm-6 mb-4" key={book1}>
+                                            <div className="card">
+                                            <img className="card-img-top img-fluid" src={bookCoverPhoto[book1.book_cover_photo]} alt={book1.book_cover_photo} />
+                                                <div className="card-body">
+                                                <a href="#" className="text-decoration-none"><p className="book-title font-18px ">{book1.book_title}</p></a>
+                                                    <p className="book-author font-14px">{book1.author_name}</p>
+                                                </div>
+                                                <div className="card-footer text-muted font-14px"><strike>{book1.book_price}$</strike>&nbsp;<b>{book1.finalprice}$</b></div>
+                                            </div>
+                                        </div>
+                                        )
+                                    })
+                                }
+                            </div>
+                        </div>
+                    </div>
+                        <div class="collapse" id="collapseExample1">
+                            <p>8 Most popular books</p>
+                            <div class="card card-body">
+                            <div id="mainRow" className="row">
+                                {
+                                    this.state.ppl.map(book2 => {
+                                        return (
+                                        <div className="col-lg-3 col-md-4 col-sm-6 mb-4" key={book2}>
+                                            <div className="card">
+                                            <img className="card-img-top img-fluid" src={bookCoverPhoto[book2.book_cover_photo]} alt={book2.book_cover_photo} />
+                                                <div className="card-body">
+                                                <a href="#" className="text-decoration-none"><p className="book-title font-18px ">{book2.book_title}</p></a>
+                                                    <p className="book-author font-14px">{book2.author_name}</p>
+                                                </div>
+                                                <div className="card-footer text-muted font-14px"><strike>{book2.book_price}$</strike>&nbsp;<b>{book2.finalprice}$</b></div>
+                                            </div>
+                                        </div>
+                                        )
+                                        })
+                                }
+                                </div>
+                            </div>
+                        </div>
+                    
+                </div>
             </div>
-        </div>
-    </div>
-</section>
-);
+        
+    </section>
+    );
+    }
 }
 
 export default Home;  

@@ -84,7 +84,8 @@ class BookRepositories {
     public function getTop10DiscountBooks(){
         $discount =  $this->query
         -> join('discount','discount.book_id','=','book.id')
-        -> selectRaw('book.*,(book.book_price-discount.discount_price) as getdiscount')
+        ->join('author','author.id','=','book.author_id')
+        -> selectRaw('book.book_title,author.author_name,book.book_cover_photo,book.book_price,(book.book_price-discount.discount_price) as getdiscount')
         -> where([  [  'discount.discount_start_date','<=',today()],
                     [  'discount.discount_end_date','>=',today()],])
         -> orwhere([[  'discount.discount_start_date','<=',today()], 
@@ -124,14 +125,15 @@ class BookRepositories {
             $join-> on('recommend.id','=','book.id') ;
         })
         ->  leftJoin('discount','book.id','=','discount.book_id')
-        ->  selectRaw('     book.id,book.book_price,recommend.averagestar ,
+        ->join('author','book.author_id','=','author.id')
+        ->  selectRaw('     book.id,book.book_title,book.book_price,author.author_name,book.book_cover_photo,recommend.averagestar ,
                             (case   when    discount.discount_start_date <= current_date
                                     and (   discount.discount_end_date >= current_date or 
                                             discount.discount_end_date is null )    
                                     then discount.discount_price
                                     else book.book_price end  ) as finalprice     ' )
 
-        ->groupBy('book.id','recommend.averagestar','finalprice')
+        ->groupBy('book.id','recommend.averagestar','finalprice','book.book_title','author.author_name','book.book_price')
         -> orderBy('recommend.averagestar','desc')->orderby('finalprice')
         ->take(8)
         -> get();
@@ -155,14 +157,15 @@ class BookRepositories {
             $join-> on('mostreview.id','=','book.id') ;
         })
         ->  leftJoin('discount','book.id','=','discount.book_id')
-        ->  selectRaw('     book.id,book.book_price,mostreview.total_review ,
+        ->join('author','book.author_id','=','author.id')
+        ->  selectRaw('     book.id,book.book_price,mostreview.total_review ,book.book_title,book.book_price,author.author_name,book.book_cover_photo,
                             (case   when    discount.discount_start_date <= current_date
                                     and (   discount.discount_end_date >= current_date or 
                                             discount.discount_end_date is null )    
                                     then discount.discount_price
                                     else book.book_price end  ) as finalprice     ' )
 
-        ->  groupBy('book.id','mostreview.total_review','finalprice')
+        ->  groupBy('book.id','mostreview.total_review','finalprice','book.book_title','author.author_name','book.book_cover_photo')
         ->  orderBy('mostreview.total_review','desc')->orderby('finalprice')
         ->  take(8)
         ->  get() ;

@@ -5,27 +5,22 @@ import Home from '../components/home/homepage';
 import {HashRouter, Route, Routes} from 'react-router-dom';
 import Footer from './Footer';
 import About from './About';
-
+import Product from './Product';
+import Shop from './Shop';
 ReactDOM.render( 
     
     <HashRouter>
         <Header />
         <Routes>
-            <Route path = "/homepage" element={<Home />}></Route>
-            <Route path = "/aboutus" element={<About />}></Route>
+            <Route path = "/homepage"   element={<Home />}>     </Route>
+            <Route path = "/aboutus"    element={<About />}>    </Route>
+            <Route path = "/product"    element={<Product/>}>   </Route>
+            <Route path = "/shop"       element={<Shop/>}>      </Route>
         </Routes>
-        <Footer />
+        {/* <Footer /> */}
     </HashRouter>,
     document.getElementById('root')
 
 );
-// function App(){
-//     return (
-//         <div className='App'>
-//             <Header />
-//             <h1>BookWorm</h1>
-//         </div>
-//         <h1>Hello</h1>
-//     );
-// }
-export default App ;
+
+

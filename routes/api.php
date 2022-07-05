@@ -39,7 +39,7 @@ Route::get('author/{author_id}/books','BookController@getBooksOfAuthor');
 
 
 Route::get('recommend/books','BookController@getRecommend');
-Route::get('popular/books','BookController@topMostReview');
+Route::get('popular/books','BookController@topMostPopular');
 Route::get('listrating/{num_star}','BookController@getListOfRating');
 
 Route::get('filter',[BookController::class,'filterBook']);

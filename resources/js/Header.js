@@ -9,20 +9,20 @@ function Header() {
         <>
           <Navbar bg="white" variant="white">
             <Container>
-                <Navbar.Brand href="#">
+                <Navbar.Brand href="/#/homepage">
                     <img
                         alt=""
                         src={logo}
                         width="32"
                         height="32"
                         className="d-inline-block align-top"
-                        />{' '}
+                        />
                             BOOKWORM
                 </Navbar.Brand>
                 <Nav>
-                    <Nav.Link href="#">Home</Nav.Link>  
+                    <Nav.Link href="/#/homepage">Home</Nav.Link>  
                     <Nav.Link href="#">Shop</Nav.Link>
-                    <Nav.Link href="#">About</Nav.Link>
+                    <Nav.Link href="/#/aboutus">About</Nav.Link>
                     <Nav.Link href="#">Cart</Nav.Link>
                     <Button variant="primary">Sign in</Button>{' '} 
                 </Nav>  

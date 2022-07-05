@@ -70,7 +70,17 @@
     width: 100%;
     max-width: 100%;
     height: 300px;
-    vertical-align: middle;
+    vertical-align: middle
+}
+.book-title{
+    height: 100px;
+}
+
+#collapseExample1 p{
+    text-align: center;
+}
+#collapseExample p{
+    text-align: center;
 }
 
 .swiper-button-next, .swiper-button-prev {
@@ -83,3 +93,23 @@
         height: 100%;
     }
 }  
+.title-shop-page{
+    padding-top: 30px;
+    
+}
+.title-shop-page p b{
+    font-size: 30px;
+}
+.title-shop-page hr{
+    margin-left: -1px;
+    width: 1200px;
+}
+.shop-page-list{
+    padding-top: 30px;
+}
+.dropdown-toggle{
+    padding: 5px 10px;
+}
+.btn-sort {
+    padding: 0 10px;
+}

@@ -28,11 +28,6 @@ class Shop extends React.Component {
         const author = await axios.get('http://127.0.0.1:8000/api/authors').then(respone=>{
             this.setState({authors:respone.data});
         });
-        // const getcategoryname = await axios.get('http://127.0.0.1:8000/api/categories').then(result =>{
-        //     const categoryname = result.data.data;
-        //     this.setState({categoryname:categoryname});
-        // })
-        // await Promise.all([getallbook,getcategoryname]);
         await Promise.all([getallbook,category,author]);
         
     }
@@ -42,7 +37,7 @@ class Shop extends React.Component {
                 <div className="container">
                     <div className="row">
                             <div className="col-md-12 title-shop-page">
-                                <p> <b>Books</b> (filter by category #1)</p>
+                                <p> <b>Books</b></p>
                                 <hr/> 
                             </div>
                     </div>
@@ -154,9 +149,9 @@ class Shop extends React.Component {
                         </div>
                         <div className="col-md-10">
                             <div className="row">
-                                <div className="col-md-3">
+                                {/* <div className="col-md-3">
                                     showing 1-12 of 126 books
-                                </div>
+                                </div> */}
                                 <div className="col-md-9">
                                    <div className="row">
                                     <div className="col-md-6">

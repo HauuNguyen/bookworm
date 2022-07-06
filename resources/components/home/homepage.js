@@ -10,25 +10,18 @@ import 'swiper/css';
 import axios from "axios";
 import { bookCoverPhoto } from "../../js/bookcoverphoto";
 import StarRatings from "react-star-ratings";
-
+import { Tabs } from "react-bootstrap";
+import Tab from "react-bootstrap";
+import Popular from "../../js/popular";
+import Recommend from "../../js/recommend";
 class Home extends Component {
     state = {
-        books:[],
-        rcm:[],
-        ppl:[]
+        books:[]
     }
-
     async componentDidMount(){
-        const discount = await axios.get('http://127.0.0.1:8000/api/books/discount').then(respone=>{
+        await axios.get('http://127.0.0.1:8000/api/books/discount').then(respone=>{
             this.setState({books:respone.data});
-        });
-        const recommend = await axios.get('http://127.0.0.1:8000/api/recommend/books').then(respone=>{
-            this.setState({rcm:respone.data});
-        });
-        const poppular = await axios.get('http://127.0.0.1:8000/api/popular/books').then(respone=>{
-            this.setState({ppl:respone.data});
-        });
-        await Promise.all([discount,recommend,poppular]);
+        })
     }
     render(){
 
@@ -63,19 +56,6 @@ class Home extends Component {
                 this.state.books.map(book=>{
                     return (
                         <SwiperSlide key={book} className="carousel">
-                            {/* <div className="card">
-                                <div className="card p-2">
-                                <a className="card-block stretched-link text-decoration-none text-dark" href="#">
-                                <img className="card-img-top img-fluid" src={bookCoverPhoto[book.book_cover_photo]} alt="Books" />
-                                <div className="card-body">
-                                    <p className="book-title font-18px">{book.book_title}</p>
-                                    <p className="book-author font-14px">{book.author_name}</p>
-                                </div>
-                                <div className="card-footer text-muted font-14px"><strike>{book.book_price}$</strike>&nbsp;<b>{book.getdiscount}$</b></div>
-        
-                                </a>
-                            </div>
-                            </div> */}
                             <div className="card">
                                 <img className="card-img-top img-fluid" src={bookCoverPhoto[book.book_cover_photo]} alt="Books" />
                                 <div className="card-body">
@@ -91,10 +71,23 @@ class Home extends Component {
                                 <div className="card-footer text-muted font-14px"><strike>{book.book_price}$</strike>&nbsp;<b>{book.getdiscount}$</b></div>
                             </div>
                         </SwiperSlide>)})
-                })
+                }
 
             </Swiper>
-            <div className="book-list">
+            <div className="hahahaha">
+                <h4>Feature Books</h4>
+            </div>
+            
+            
+            <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example" className="mb-3">
+                <Tab eventKey="home" title="Recommend">
+                    <Recommend/>
+                </Tab>
+                <Tab eventKey="profile" title="Popular">
+                    <Popular/>
+                </Tab>
+            </Tabs>
+            {/* <div className="book-list">
                 <div className="text-center">
                     <p className="section-title font-20px mb-3"><h4>Featured Books</h4></p>
                     <div className="mb-4">
@@ -170,7 +163,7 @@ class Home extends Component {
                             </div>
                         </div>
                     
-                </div>
+                </div> */}
             </div>
         
     </section>

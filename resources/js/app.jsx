@@ -7,6 +7,9 @@ import Footer from './Footer';
 import About from './About';
 import Product from './Product';
 import Shop from './Shop';
+import Login from './login';
+import Popular from './popular';
+import Recommend from './recommend';
 ReactDOM.render( 
     
     <HashRouter>
@@ -16,6 +19,9 @@ ReactDOM.render(
             <Route path = "/aboutus"    element={<About />}>    </Route>
             <Route path = "/product"    element={<Product/>}>   </Route>
             <Route path = "/shop"       element={<Shop/>}>      </Route>
+            <Route path = "/login"      element={<Login/>}>      </Route>
+            <Route path = "/popular"    element={<Popular/>}>      </Route>
+            <Route path = "/recommend"  element={<Recommend/>}>      </Route>
         </Routes>
         <Footer />
     </HashRouter>,

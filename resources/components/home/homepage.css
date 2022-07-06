@@ -74,8 +74,12 @@
 }
 .book-title{
     height: 100px;
+    text-align: center;
 }
-
+.book-author{
+    font-size: small;
+    text-align: center;
+}
 #collapseExample1 p{
     text-align: center;
 }
@@ -95,7 +99,6 @@
 }  
 .title-shop-page{
     padding-top: 30px;
-    
 }
 .title-shop-page p b{
     font-size: 30px;
@@ -110,6 +113,24 @@
 .dropdown-toggle{
     padding: 5px 10px;
 }
-.btn-sort {
-    padding: 0 10px;
+.btn-sort2 {
+    padding : 0px 10px;
+    margin-left: 165px;
+}
+.btn-sort1{
+    padding: 0px 10px ;
+    margin-left: 400px;
+}
+.btn-rcm-ppl{
+    margin-left: -100px;
+}
+.card img{
+    height: 300px;
+    width: 200px;
+}
+.btn{
+    background-color:rgb(59, 108, 214);
+}
+a{
+    text-decoration: none;
 }

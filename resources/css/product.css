@@ -10,16 +10,20 @@ body {
 .grid-container {
     display: grid;
   }
-.main-section {
-    position: relative;
+.main-section1 {
     left: 50%;
     right: 50%;
-    transform: translate(-75%, 5%);
-
-
+    transform: translate(40%, 5%);
+}
+.main-section {
+    margin-left: 65%;
+    margin-right: 10%;
+    transform: translate(-50%, 5%);
+    width: 125%;
+    height: 100%;
 }
 .col {
-    padding-right: -50%;
+    padding-right: 20%;
 }
 .left-side-product-box img {
     width: 100%;
@@ -61,3 +65,42 @@ body {
         height: auto;
     }
 }
+.column {
+    float: left;
+    width: 70%;
+  }
+  
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+  .row {
+    display: flex;
+  }
+  
+  .column1 {
+    flex: 50%;
+    
+  }
+  .column2{
+    flex: 50%;
+  }
+  .woocommerce-variation-add-to-cart {
+    display: flex;
+  }
+  
+  .qib-container {
+    display: flex;
+  }
+  
+  .App {
+    font-family: sans-serif;
+    text-align: center;
+  }
+  .quantitycart{
+    padding-left: 10%;
+  }
+  .btn {
+    margin-left: 80px;
+  }

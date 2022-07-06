@@ -82,14 +82,23 @@ class BookRepositories {
         return $authId;
     }
     public function getTop10DiscountBooks(){
+        $recommend = $this->query
+        ->join('review','book.id','=','review.book_id')
+        -> select('book.id',DB::raw('round(AVG(rating_start),1) as averagestar'))
+        -> groupBy('book.id');
+    
         $discount =  $this->query
+        -> joinSub($recommend,'recommend',function ($join){
+            $join-> on('recommend.id','=','book.id') ;
+        })
         -> join('discount','discount.book_id','=','book.id')
         ->join('author','author.id','=','book.author_id')
-        -> selectRaw('book.book_title,author.author_name,book.book_cover_photo,book.book_price,(book.book_price-discount.discount_price) as getdiscount')
+        -> selectRaw('book.book_title,author.author_name,book.book_cover_photo,book.book_price,(book.book_price-discount.discount_price) as getdiscount,recommend.averagestar')
         -> where([  [  'discount.discount_start_date','<=',today()],
                     [  'discount.discount_end_date','>=',today()],])
         -> orwhere([[  'discount.discount_start_date','<=',today()], 
                     [  'discount.discount_end_date','=',null],])
+        ->groupBy('book.book_title','author.author_name','book.book_cover_photo','book.book_price','recommend.averagestar','getdiscount')
         -> orderBy('getdiscount','desc')
         -> take(10)
         -> get();
@@ -125,8 +134,8 @@ class BookRepositories {
             $join-> on('recommend.id','=','book.id') ;
         })
         ->  leftJoin('discount','book.id','=','discount.book_id')
-        ->join('author','book.author_id','=','author.id')
-        ->  selectRaw('     book.id,book.book_title,book.book_price,author.author_name,book.book_cover_photo,recommend.averagestar ,
+        ->  join('author','book.author_id','=','author.id')
+        ->  selectRaw('     book.id,book.book_title,book.book_price,author.author_name,book.book_cover_photo,recommend.averagestar,
                             (case   when    discount.discount_start_date <= current_date
                                     and (   discount.discount_end_date >= current_date or 
                                             discount.discount_end_date is null )    
@@ -150,7 +159,7 @@ class BookRepositories {
     public function getMostPopularBooks(){
         $mostreview = $this -> query
             -> leftjoin('review','review.book_id','=','book.id')
-            -> select('book.id',DB::raw('COUNT(review.book_id) as total_review'))
+            -> select('book.id',DB::raw('COUNT(review.book_id) as total_review'),DB::raw('round(AVG(rating_start),1) as averagestar'))
             -> groupBy('book.id') ;
         $sub = $this->query 
         -> joinSub($mostreview,'mostreview',function ($join){
@@ -158,14 +167,14 @@ class BookRepositories {
         })
         ->  leftJoin('discount','book.id','=','discount.book_id')
         ->join('author','book.author_id','=','author.id')
-        ->  selectRaw('     book.id,book.book_price,mostreview.total_review ,book.book_title,book.book_price,author.author_name,book.book_cover_photo,
+        ->  selectRaw('     book.id,book.book_price,mostreview.total_review ,mostreview.averagestar,book.book_title,book.book_price,author.author_name,book.book_cover_photo,
                             (case   when    discount.discount_start_date <= current_date
                                     and (   discount.discount_end_date >= current_date or 
                                             discount.discount_end_date is null )    
                                     then discount.discount_price
                                     else book.book_price end  ) as finalprice     ' )
 
-        ->  groupBy('book.id','mostreview.total_review','finalprice','book.book_title','author.author_name','book.book_cover_photo')
+        ->  groupBy('book.id','mostreview.total_review','finalprice','book.book_title','author.author_name','book.book_cover_photo','mostreview.averagestar')
         ->  orderBy('mostreview.total_review','desc')->orderby('finalprice')
         ->  take(8)
         ->  get() ;
@@ -174,7 +183,8 @@ class BookRepositories {
     public function sortBySale(){
          return  $this->query
         ->  leftJoin('discount','book.id','=','discount.book_id')
-        ->  selectRaw('     book.id,
+        ->join('author','author.id','=','book.author_id')
+        ->  selectRaw('     book.id,book.book_title,author.author_name,book.book_price,book.book_cover_photo,
                              (case   when    discount.discount_start_date <= current_date
                                      and (   discount.discount_end_date >= current_date or 
                                              discount.discount_end_date is null )    
@@ -186,9 +196,9 @@ class BookRepositories {
                                      then (book.book_price-discount.discount_price)
                                      else 0 end  ) as sub    ' )
  
-        -> groupBy('book.id','finalprice', 'sub')
+        -> groupBy('book.id','finalprice', 'sub','book.book_title','author.author_name','book.book_price','book.book_cover_photo')
         ->  orderBy('sub','desc')->orderBy('finalprice')
-        ->  get();
+        ->  paginate(12);
     }
     public function sortByPopular(){
         $mostreview = $this -> query

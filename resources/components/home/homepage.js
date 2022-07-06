@@ -9,7 +9,7 @@ import "swiper/css/navigation";
 import 'swiper/css';
 import axios from "axios";
 import { bookCoverPhoto } from "../../js/bookcoverphoto";
-
+import StarRatings from "react-star-ratings";
 
 class Home extends Component {
     state = {
@@ -17,6 +17,7 @@ class Home extends Component {
         rcm:[],
         ppl:[]
     }
+
     async componentDidMount(){
         const discount = await axios.get('http://127.0.0.1:8000/api/books/discount').then(respone=>{
             this.setState({books:respone.data});
@@ -40,7 +41,7 @@ class Home extends Component {
                     <h4>On Sale</h4>
                 </div>
                 <div className="col-lg-6 d-flex justify-content-end">
-                    <Button color="primary" size="sm" href="/#/aboutus">
+                    <Button color="primary" size="sm" href="/#/shop">
                         View All &nbsp; <i class="fas fa-angle-right"></i> 
                     </Button>
                 </div>
@@ -80,6 +81,12 @@ class Home extends Component {
                                 <div className="card-body">
                                     <a href="#" className="text-decoration-none"><p className="book-title font-18px">{book.book_title}</p></a>
                                     <p className="book-author font-14px">{book.author_name}</p>
+                                    <StarRatings
+                                        rating={Number(book.averagestar)}
+                                        starRatedColor='yellow'
+                                        starDimension="20px"
+                                        starSpacing="10px"
+                                    />
                                 </div>
                                 <div className="card-footer text-muted font-14px"><strike>{book.book_price}$</strike>&nbsp;<b>{book.getdiscount}$</b></div>
                             </div>
@@ -91,14 +98,17 @@ class Home extends Component {
                 <div className="text-center">
                     <p className="section-title font-20px mb-3"><h4>Featured Books</h4></p>
                     <div className="mb-4">
-                    <p>
+                    <div className="btn-rcm-ppl">
+                    
                         <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
                             Recommend
                         </a> &ensp;
                         <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample1" aria-expanded="false" aria-controls="collapseExample1">
                             Popular
                         </button>
-                        </p>
+                       
+                    </div>
+
                     </div>
                 </div>
                     <div class="collapse" id="collapseExample">
@@ -114,6 +124,12 @@ class Home extends Component {
                                                 <div className="card-body">
                                                 <a href="#" className="text-decoration-none"><p className="book-title font-18px ">{book1.book_title}</p></a>
                                                     <p className="book-author font-14px">{book1.author_name}</p>
+                                                    <StarRatings
+                                                        rating={Number(book1.averagestar) }
+                                                        starRatedColor='yellow'
+                                                        starDimension="20px"
+                                                        starSpacing="10px"
+                                                    />
                                                 </div>
                                                 <div className="card-footer text-muted font-14px"><strike>{book1.book_price}$</strike>&nbsp;<b>{book1.finalprice}$</b></div>
                                             </div>
@@ -137,6 +153,12 @@ class Home extends Component {
                                                 <div className="card-body">
                                                 <a href="#" className="text-decoration-none"><p className="book-title font-18px ">{book2.book_title}</p></a>
                                                     <p className="book-author font-14px">{book2.author_name}</p>
+                                                    <StarRatings
+                                                        rating={Number(book2.averagestar)}
+                                                        starRatedColor='yellow'
+                                                        starDimension="20px"
+                                                        starSpacing="10px"
+                                                    />
                                                 </div>
                                                 <div className="card-footer text-muted font-14px"><strike>{book2.book_price}$</strike>&nbsp;<b>{book2.finalprice}$</b></div>
                                             </div>

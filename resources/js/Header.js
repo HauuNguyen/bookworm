@@ -21,7 +21,7 @@ function Header() {
                 </Navbar.Brand>
                 <Nav>
                     <Nav.Link href="/#/homepage">Home</Nav.Link>  
-                    <Nav.Link href="#">Shop</Nav.Link>
+                    <Nav.Link href="/#/shop">Shop</Nav.Link>
                     <Nav.Link href="/#/aboutus">About</Nav.Link>
                     <Nav.Link href="#">Cart</Nav.Link>
                     <Button variant="primary">Sign in</Button>{' '} 

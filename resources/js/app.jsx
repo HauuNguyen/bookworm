@@ -17,7 +17,7 @@ ReactDOM.render(
             <Route path = "/product"    element={<Product/>}>   </Route>
             <Route path = "/shop"       element={<Shop/>}>      </Route>
         </Routes>
-        {/* <Footer /> */}
+        <Footer />
     </HashRouter>,
     document.getElementById('root')
 

@@ -24,7 +24,9 @@
         "sass-loader": "^12.1.0"
     },
     "dependencies": {
+        "react-qty-picker": "^1.0.6",
         "react-router-dom": "^6.3.0",
+        "react-star-ratings": "^2.3.0",
         "reactstrap": "^9.1.1",
         "swiper": "^8.2.6"
     }

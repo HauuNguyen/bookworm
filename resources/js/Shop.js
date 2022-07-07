@@ -12,15 +12,16 @@ class Shop extends React.Component {
     
         this.state = {
             booklist:[],
+            bookListPage:[],
             categories:[],
             authors:[],
+            links:[],
         
         };
     }
     async componentDidMount(){
-        const getallbook = await axios.get('http://127.0.0.1:8000/api/books/onsale').then(result =>{
-            const booklist = result.data.data;
-            this.setState({booklist:booklist});
+        const getlink = await axios.get('http://127.0.0.1:8000/api/books/onsale').then(respone =>{
+            this.setState({links:respone.link});
         })
         const category = await axios.get(' http://127.0.0.1:8000/api/categories').then(respone=>{
             this.setState({categories:respone.data});
@@ -28,10 +29,70 @@ class Shop extends React.Component {
         const author = await axios.get('http://127.0.0.1:8000/api/authors').then(respone=>{
             this.setState({authors:respone.data});
         });
-        await Promise.all([getallbook,category,author]);
+        await Promise.all([getlink,category,author,this.getUsersData()]);
         
     }
+    async getUsersData(pageNumber=1){
+        const url = `http://127.0.0.1:8000/api/books/onsale?page=${pageNumber}`;
+        const pag = await axios.get(url);
+        // console.log('d',pag);
+        this.setState({bookListPage: pag.data});
+    }
+
+    handChangePage = (e) => {
+    
+        this.getUsersData(e.target.text.split(" ")[0]);
+        //console.log("page",e.target.text.split(" "));
+     
+     }
+
+    renderUserList(){
+        
+        // const {data, current_page,per_page,total}=this.state.users ;
+        const bookListPage =  (this.state.bookListPage);
+        //console.log('rf',bookListPage);
+
+        const  bookList=bookListPage.data;
+        //console.log(typeof bookList)
+
+        //console.log(bookList);
+        // console.log(products);
+
+      
+        return (
+            <React.Fragment>
+            <div id="mainRow" className="row">
+            
+            {bookList && bookList.map((book1) => (
+                <>
+                 <a href={`/#/product/${book1.id}`}  className="col-lg-3 col-md-4 col-sm-6 mb-4" key={book1.id}>
+                          <div className="fiximg"> 
+                          <div className="card">
+                             <img className="card-img-top img-fluid" src={bookCoverPhoto[book1.book_cover_photo]} alt={book1.book_cover_photo} />
+                                 <div className="card-body">
+                                 <div className="text-decoration-none"><p className="book-title font-18px ">{book1.book_title}</p></div>
+                                      <p className="book-author font-14px">{book1.author_name}</p>
+                                 </div>
+                         <div className="card-footer text-muted font-14px"><strike>{book1.book_price}$</strike>&nbsp;<b>{book1.finalprice}$</b></div>
+                         </div>
+                         </div>
+                </a>
+
+                </>
+            
+            ))}
+                </div> 
+         
+            </React.Fragment>
+        )
+
+            
+
+    }
     render() {
+        const {users} = this.state ;
+        const bookListPage =  (this.state.bookListPage);
+        const bookPageination=bookListPage.links;
         return (
             <section> 
                 <div className="container">
@@ -112,38 +173,7 @@ class Shop extends React.Component {
                                         </div>
                                     </div>
                                     </div>
-                                    {/* <table className="table">
-                                    <Accordion>
-                                    <Accordion.Item >
-                                    <Accordion.Header>Accordion Item #1</Accordion.Header>
-                                    <Accordion.Body>          
-                                        Hello
-                                    </Accordion.Body>
-                                    </Accordion.Item>
-                                    </Accordion>
-                                    </table>
-                                </div>
-                                <div className="col-md-12">
-                                    <table className="table">
-                                        <thead><th>Author</th></thead>
-                                        <tbody>
-                                            <tr><td><a href="#">Author #1</a></td></tr>
-                                            <tr><td><a href="#">Author #2</a></td></tr>
-                                            <tr><td><a href="#">Author #3</a></td></tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div className="col-md-12">
-                                    <table className="table">
-                                        <thead><th>rating Review</th></thead>
-                                        <tbody>
-                                            <tr><td>1 Star</td></tr>
-                                            <tr><td>2 Star</td></tr>
-                                            <tr><td>3 Star</td></tr>
-                                            <tr><td>4 Star</td></tr>
-                                            <tr><td>5 Star</td></tr>
-                                        </tbody>
-                                    </table> */}
+                                    
                                 </div>
                             </div>
                         </div>
@@ -189,50 +219,59 @@ class Shop extends React.Component {
                                 <div className="book-list">
                                 <div className="col-md-12"> 
                                 <div class="card card-body">
+                                    
                             <div id="mainRow" className="row">
-                                {
-                                    this.state.booklist.map(book1 => {
-                                        return (
-                                        <div className="col-lg-3 col-md-4 col-sm-6 mb-4" key={book1}>
-                                            <div className="card">
-                                            <img className="card-img-top img-fluid" src={bookCoverPhoto[book1.book_cover_photo]} alt={book1.book_cover_photo} />
-                                                <div className="card-body">
-                                                <a href="/#/product/id" className="text-decoration-none"><p className="book-title font-18px ">{book1.book_title}</p></a>
-                                                    <p className="book-author font-14px">{book1.author_name}</p>
-                                                </div>
-                                                <div className="card-footer text-muted font-14px"><strike>{book1.book_price}$</strike>&nbsp;<b>{book1.finalprice}$</b></div>
-                                            </div>
-                                        </div>
-                                        )
-                                    })
-                                }
+                                
+                                    {/* // this.state.booklist.map(book1 => {
+                                    //     console.log('dj',{book1});
+                                    //     return (
+                                    //     <div className="col-lg-3 col-md-4 col-sm-6 mb-4" key={book1}>
+                                    //         <div className="card">
+                                    //         <img className="card-img-top img-fluid" src={bookCoverPhoto[book1.book_cover_photo]} alt={book1.book_cover_photo} />
+                                    //             <div className="card-body">
+                                    //             <a href="/#/product/id" className="text-decoration-none"><p className="book-title font-18px ">{book1.book_title}</p></a>
+                                    //                 <p className="book-author font-14px">{book1.author_name}</p>
+                                    //             </div>
+                                    //             <div className="card-footer text-muted font-14px"><strike>{book1.book_price}$</strike>&nbsp;<b>{book1.finalprice}$</b></div>
+                                    //         </div>
+                                    //     </div>
+                                    //     )
+                                    // }) */}
+
+                                    {this.renderUserList()}
+                                
                             </div>
                         </div>
                                 </div>
                                 </div>
 
-                            </div>
-                        </div>
-                    </div>
-                    <div>
+                                <div className="pag"style={{ display: 'block', width: 700, padding: 30 }}>
                     <Pagination>
-                        <Pagination.First />
-                        <Pagination.Prev />
-                        <Pagination.Item>{1}</Pagination.Item>
-                        <Pagination.Ellipsis />
+                        {/* <Pagination.Prev />
+                        <Pagination.Ellipsis /> */}
+                        {
+                            
+                             
+                            (bookPageination && bookPageination.map((link,index)=>{
 
-                        <Pagination.Item>{10}</Pagination.Item>
-                        <Pagination.Item>{11}</Pagination.Item>
-                        <Pagination.Item active>{12}</Pagination.Item>
-                        <Pagination.Item>{13}</Pagination.Item>
-                        <Pagination.Item disabled>{14}</Pagination.Item>
-
-                        <Pagination.Ellipsis />
-                        <Pagination.Item>{20}</Pagination.Item>
-                        <Pagination.Next />
-                        <Pagination.Last />
+                                return( <Pagination.Item
+                                key={`${index}`}
+                                onClick={(e) => this.handChangePage(e)}                        
+                                > 
+                                {index+1} 
+                                
+                                </Pagination.Item>)
+                               
+                            }))
+                        }
+                        {/* <Pagination.Ellipsis />
+                        <Pagination.Next /> */}
                     </Pagination>
                     </div>
+                            </div>
+                        </div>
+                    </div>
+                    
 
                 </div>
                 

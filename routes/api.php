@@ -30,6 +30,7 @@ Route::get('books/pricedecrease','BookController@sortPriceLTH');
 Route::get('books/priceincrease','BookController@sortPriceHTL');
 Route::get('book/{id?}',[BookController::class,'index']);
 
+
 Route::get('categories/','BookController@getCategories');
 Route::get('category/{category_id}/books','BookController@getBooksOfCategory');
 

@@ -22,7 +22,27 @@ class BookRepositories {
     public function getById($id)
     {
         if($id){
-            return $this->query->find($id);
+            $final = $this->query 
+            ->  leftJoin('discount','book.id','=','discount.book_id')
+            ->  selectRaw('book.id,
+                (case  when    discount.discount_start_date <= current_date
+                        and (   discount.discount_end_date >= current_date or 
+                                discount.discount_end_date is null )    
+                        then discount.discount_price
+                        else book.book_price end  ) as finalprice
+                '
+            )
+            ->groupBy('book.id','finalprice');
+             $bookdetail = $this->query
+             -> joinSub($final,'final',function($join){
+                $join->on('final.id','=','book.id');
+             })
+            ->join('category','category.id','=','book.category_id')
+            ->join('author','author.id','=','book.author_id')
+            ->select('book.book_title','book_summary','book.book_price','final.finalprice','author.author_name','category.category_name','book.book_cover_photo')
+            ->groupBy('book.book_title','book_summary','book.book_price','final.finalprice','author.author_name','category.category_name','book.book_cover_photo')
+            ->where('book.id','=',$id)->get() ;
+            return $bookdetail;
         }
         return $this->query->paginate(12); //all ??
     }
@@ -59,6 +79,7 @@ class BookRepositories {
         $cate = $this->query
         -> join('category','book.category_id','=','category.id')
         -> select('category.category_name')->distinct()
+        ->orderBy('category.category_name')
         -> get();
         return $cate;
     }    
@@ -69,10 +90,10 @@ class BookRepositories {
         return $cateId;
     }
     public function getAllAuthors(){
-        //return $this -> author ->orderBy('author_name')->get();
         $auth = $this->query
         -> join('author','book.author_id','=','author.id')
         -> select('author.author_name')->distinct()
+        ->orderBy('author.author_name')
         -> get();
         return $auth;
     }    
@@ -147,13 +168,6 @@ class BookRepositories {
         ->take(8)
         -> get();
         return $sub ;
-        // $recommend = $this->query
-        //     -> join('review','book.id','=','review.book_id')
-        //     -> select('book.*',DB::raw('round(AVG(rating_start),1) as averagestar'))
-        //     -> groupBy('book.id')
-        //     -> orderBy('averagestar','desc')
-        //     -> get();
-        // return $recommend ;
     } 
 
     public function getMostPopularBooks(){

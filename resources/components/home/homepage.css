@@ -125,8 +125,13 @@
     margin-left: -100px;
 }
 .card img{
+    height: 2500px;
+    width: 250px;
+
+}
+.fiximg img{
     height: 300px;
-    width: 200px;
+    width: 250px;
 }
 .btn{
     background-color:rgb(59, 108, 214);
@@ -142,4 +147,7 @@ a{
 }
 .textmost{
     text-align: center;
+}
+.pag{
+    margin-left: 450px;
 }

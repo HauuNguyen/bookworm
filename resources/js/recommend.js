@@ -27,11 +27,11 @@ class Recommend extends Component{
                                     {
                                         this.state.recommends.map(book1 => {
                                             return (
-                                            <div className="col-lg-3 col-md-4 col-sm-6 mb-4" key={book1}>
-                                                <div className="card">
+                                            <div  className="col-lg-3 col-md-4 col-sm-6 mb-4" key={book1}>
+                                                <a href={`/#/product/${book1.id}`} className="card">
                                                 <img className="card-img-top img-fluid" src={bookCoverPhoto[book1.book_cover_photo]} alt={book1.book_cover_photo} />
                                                     <div className="card-body">
-                                                    <a href="#" className="text-decoration-none"><p className="book-title font-18px ">{book1.book_title}</p></a>
+                                                    <div  className="text-decoration-none"><p className="book-title font-18px ">{book1.book_title}</p></div>
                                                         <p className="book-author font-14px">{book1.author_name}</p>
                                                         <StarRatings
                                                             rating={Number(book1.averagestar) }
@@ -41,7 +41,7 @@ class Recommend extends Component{
                                                         />
                                                     </div>
                                                     <div className="card-footer text-muted font-14px"><strike>{book1.book_price}$</strike>&nbsp;<b>{book1.finalprice}$</b></div>
-                                                </div>
+                                                </a>
                                             </div>
                                             )
                                         })

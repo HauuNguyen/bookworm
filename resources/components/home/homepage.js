@@ -56,10 +56,10 @@ class Home extends Component {
                 this.state.books.map(book=>{
                     return (
                         <SwiperSlide key={book} className="carousel">
-                            <div className="card">
+                            <a href={`/#/product/${book.id}`} className="card">
                                 <img className="card-img-top img-fluid" src={bookCoverPhoto[book.book_cover_photo]} alt="Books" />
                                 <div className="card-body">
-                                    <a href="#" className="text-decoration-none"><p className="book-title font-18px">{book.book_title}</p></a>
+                                    <div className="text-decoration-none"><p className="book-title font-18px">{book.book_title}</p></div>
                                     <p className="book-author font-14px">{book.author_name}</p>
                                     <StarRatings
                                         rating={Number(book.averagestar)}
@@ -69,7 +69,7 @@ class Home extends Component {
                                     />
                                 </div>
                                 <div className="card-footer text-muted font-14px"><strike>{book.book_price}$</strike>&nbsp;<b>{book.getdiscount}$</b></div>
-                            </div>
+                            </a>
                         </SwiperSlide>)})
                 }
 
@@ -87,83 +87,6 @@ class Home extends Component {
                     <Popular/>
                 </Tab>
             </Tabs>
-            {/* <div className="book-list">
-                <div className="text-center">
-                    <p className="section-title font-20px mb-3"><h4>Featured Books</h4></p>
-                    <div className="mb-4">
-                    <div className="btn-rcm-ppl">
-                    
-                        <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-                            Recommend
-                        </a> &ensp;
-                        <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample1" aria-expanded="false" aria-controls="collapseExample1">
-                            Popular
-                        </button>
-                       
-                    </div>
-
-                    </div>
-                </div>
-                    <div class="collapse" id="collapseExample">
-                            <p>8 Most recommend books</p>
-                            <div class="card card-body">
-                            <div id="mainRow" className="row">
-                                {
-                                    this.state.rcm.map(book1 => {
-                                        return (
-                                        <div className="col-lg-3 col-md-4 col-sm-6 mb-4" key={book1}>
-                                            <div className="card">
-                                            <img className="card-img-top img-fluid" src={bookCoverPhoto[book1.book_cover_photo]} alt={book1.book_cover_photo} />
-                                                <div className="card-body">
-                                                <a href="#" className="text-decoration-none"><p className="book-title font-18px ">{book1.book_title}</p></a>
-                                                    <p className="book-author font-14px">{book1.author_name}</p>
-                                                    <StarRatings
-                                                        rating={Number(book1.averagestar) }
-                                                        starRatedColor='yellow'
-                                                        starDimension="20px"
-                                                        starSpacing="10px"
-                                                    />
-                                                </div>
-                                                <div className="card-footer text-muted font-14px"><strike>{book1.book_price}$</strike>&nbsp;<b>{book1.finalprice}$</b></div>
-                                            </div>
-                                        </div>
-                                        )
-                                    })
-                                }
-                            </div>
-                        </div>
-                    </div>
-                        <div class="collapse" id="collapseExample1">
-                            <p>8 Most popular books</p>
-                            <div class="card card-body">
-                            <div id="mainRow" className="row">
-                                {
-                                    this.state.ppl.map(book2 => {
-                                        return (
-                                        <div className="col-lg-3 col-md-4 col-sm-6 mb-4" key={book2}>
-                                            <div className="card">
-                                            <img className="card-img-top img-fluid" src={bookCoverPhoto[book2.book_cover_photo]} alt={book2.book_cover_photo} />
-                                                <div className="card-body">
-                                                <a href="#" className="text-decoration-none"><p className="book-title font-18px ">{book2.book_title}</p></a>
-                                                    <p className="book-author font-14px">{book2.author_name}</p>
-                                                    <StarRatings
-                                                        rating={Number(book2.averagestar)}
-                                                        starRatedColor='yellow'
-                                                        starDimension="20px"
-                                                        starSpacing="10px"
-                                                    />
-                                                </div>
-                                                <div className="card-footer text-muted font-14px"><strike>{book2.book_price}$</strike>&nbsp;<b>{book2.finalprice}$</b></div>
-                                            </div>
-                                        </div>
-                                        )
-                                        })
-                                }
-                                </div>
-                            </div>
-                        </div>
-                    
-                </div> */}
             </div>
         
     </section>

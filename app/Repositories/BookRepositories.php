@@ -78,21 +78,39 @@ class BookRepositories {
         //return $this->category->orderBy('category_name')->get(); //Get id of Cate
         $cate = $this->query
         -> join('category','book.category_id','=','category.id')
-        -> select('category.category_name')->distinct()
+        -> select('category.category_name','category.id')->distinct()
         ->orderBy('category.category_name')
         -> get();
         return $cate;
     }    
 
     public function getAllBookOfCate($category_id=null){
-
-        $cateId = $this->query->where('category_id', $category_id)->get();
-        return $cateId;
+        $recommend = $this->query 
+        ->  leftJoin('discount','book.id','=','discount.book_id')
+        ->  selectRaw('book.id,
+            (case  when    discount.discount_start_date <= current_date
+                    and (   discount.discount_end_date >= current_date or 
+                            discount.discount_end_date is null )    
+                    then discount.discount_price
+                    else book.book_price end  ) as finalprice
+            '
+        )
+        ->groupBy('book.id','finalprice') ;
+        $recommend = $this->query
+        -> joinSub($recommend,'recommend',function ($join){
+            $join-> on('recommend.id','=','book.id') ;
+        })
+        ->join('author','author.id','book.author_id')
+        ->join('category','book.category_id','=','category.id')
+        ->select('book.book_title','author.author_name','book.book_price','book.book_cover_photo','recommend.finalprice')
+        ->groupBy('book.book_title','author.id','book.book_price','book.book_cover_photo','recommend.finalprice')
+        ->where('category_id', $category_id)->paginate(12);
+        return $recommend;
     }
     public function getAllAuthors(){
         $auth = $this->query
         -> join('author','book.author_id','=','author.id')
-        -> select('author.author_name')->distinct()
+        -> select('author.author_name','author.id')->distinct()
         ->orderBy('author.author_name')
         -> get();
         return $auth;
@@ -217,42 +235,71 @@ class BookRepositories {
     public function sortByPopular(){
         $mostreview = $this -> query
             -> leftjoin('review','review.book_id','=','book.id')
-            -> select('book.id',DB::raw('COUNT(review.book_id) as total_review'))
+            -> select('book.id',DB::raw('COUNT(review.book_id) as total_review'),DB::raw('round(AVG(rating_start),1) as averagestar'))
             -> groupBy('book.id') ;
         $sub = $this->query 
         -> joinSub($mostreview,'mostreview',function ($join){
             $join-> on('mostreview.id','=','book.id') ;
         })
         ->  leftJoin('discount','book.id','=','discount.book_id')
-        ->  selectRaw('     book.id,book.book_price,mostreview.total_review ,
+        ->join('author','book.author_id','=','author.id')
+        ->  selectRaw('     book.id,book.book_price,mostreview.total_review ,mostreview.averagestar,book.book_title,book.book_price,author.author_name,book.book_cover_photo,
                             (case   when    discount.discount_start_date <= current_date
                                     and (   discount.discount_end_date >= current_date or 
                                             discount.discount_end_date is null )    
                                     then discount.discount_price
                                     else book.book_price end  ) as finalprice     ' )
 
-        ->  groupBy('book.id','mostreview.total_review','finalprice')
+        ->  groupBy('book.id','mostreview.total_review','finalprice','book.book_title','author.author_name','book.book_cover_photo','mostreview.averagestar')
         ->  orderBy('mostreview.total_review','desc')->orderby('finalprice')
-        ->  get() ;
+        ->  paginate(12);
         return $sub ;       
     }
 
     public function sortByPriceLowToHigh(){
-        $sort = $this -> finalPrice() ;
+        $sort = $this->query 
+        ->  leftJoin('discount','book.id','=','discount.book_id')
+        ->  selectRaw('book.id,
+            (case  when    discount.discount_start_date <= current_date
+                    and (   discount.discount_end_date >= current_date or 
+                            discount.discount_end_date is null )    
+                    then discount.discount_price
+                    else book.book_price end  ) as finalprice
+            '
+        )
+        ->groupBy('book.id','finalprice') ;
         return $this->query
         -> joinSub($sort,'sort',function ($join){
             $join-> on('sort.id','=','book.id') ;
         })
-        ->orderBy('sort.finalprice')
-        ->get();
+        ->join('author','author.id','=','book.author_id')
+        ->join('review','review.book_id','=','book.id')
+        ->select('book.id','book.book_title','book.book_price','author.author_name','book.book_cover_photo','sort.finalprice')
+        ->groupBy('book.id','book.book_title','book.book_price','author.author_name','book.book_cover_photo','sort.finalprice') 
+        ->orderBy('sort.finalprice','desc')
+        ->paginate(12);
     }
     public function sortByPriceHighToLow(){
-        $sort = $this -> finalPrice() ;
+        $sort = $this->query 
+        ->  leftJoin('discount','book.id','=','discount.book_id')
+        ->  selectRaw('book.id,
+            (case  when    discount.discount_start_date <= current_date
+                    and (   discount.discount_end_date >= current_date or 
+                            discount.discount_end_date is null )    
+                    then discount.discount_price
+                    else book.book_price end  ) as finalprice
+            '
+        )
+        ->groupBy('book.id','finalprice') ;
         return $this->query
         -> joinSub($sort,'sort',function ($join){
             $join-> on('sort.id','=','book.id') ;
         })
-        ->orderBy('sort.finalprice','desc')
-        ->get();
+        ->join('author','author.id','=','book.author_id')
+        ->join('review','review.book_id','=','book.id')
+        ->select('book.id','book.book_title','book.book_price','author.author_name','book.book_cover_photo','sort.finalprice')
+        ->groupBy('book.id','book.book_title','book.book_price','author.author_name','book.book_cover_photo','sort.finalprice') 
+        ->orderBy('sort.finalprice')
+        ->paginate(12);
     }
 } 

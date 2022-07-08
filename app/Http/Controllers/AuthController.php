@@ -29,8 +29,13 @@ use Illuminate\Support\Facades\Validator;
             'email'         => $request -> email,
             'password'      => Hash::make($request ->password)
         ]);
+        $token = $user->createToken('mytoken')->plainTextToken;
         $user->save();
-        return response()->json(['message'=>'User has been registered'],200);
+        $respone = [
+            'user'=>$user,
+            'token'=>$token
+        ];
+        return response($respone,201);
     }
 
     public function login(Request $request)

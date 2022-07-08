@@ -6186,12 +6186,33 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var react_bootstrap_Container__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-bootstrap/Container */ "./node_modules/react-bootstrap/esm/Container.js");
-/* harmony import */ var react_bootstrap_Nav__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-bootstrap/Nav */ "./node_modules/react-bootstrap/esm/Nav.js");
-/* harmony import */ var react_bootstrap_Navbar__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-bootstrap/Navbar */ "./node_modules/react-bootstrap/esm/Navbar.js");
-/* harmony import */ var react_bootstrap_esm_Button__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-bootstrap/esm/Button */ "./node_modules/react-bootstrap/esm/Button.js");
+/* harmony import */ var react_bootstrap_Container__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-bootstrap/Container */ "./node_modules/react-bootstrap/esm/Container.js");
+/* harmony import */ var react_bootstrap_Nav__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-bootstrap/Nav */ "./node_modules/react-bootstrap/esm/Nav.js");
+/* harmony import */ var react_bootstrap_Navbar__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-bootstrap/Navbar */ "./node_modules/react-bootstrap/esm/Navbar.js");
+/* harmony import */ var react_bootstrap_esm_Button__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react-bootstrap/esm/Button */ "./node_modules/react-bootstrap/esm/Button.js");
 /* harmony import */ var _assets_bookworm_icon_svg__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../assets/bookworm_icon.svg */ "./resources/assets/bookworm_icon.svg");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Modal.js");
+/* harmony import */ var _login__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./login */ "./resources/js/login.js");
+/* harmony import */ var _css_login_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../css/login.css */ "./resources/css/login.css");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+
+
+
 
 
 
@@ -6203,37 +6224,73 @@ __webpack_require__.r(__webpack_exports__);
 
 
 function Header() {
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.Fragment, {
-    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(react_bootstrap_Navbar__WEBPACK_IMPORTED_MODULE_2__.default, {
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
+      _useState2 = _slicedToArray(_useState, 2),
+      show = _useState2[0],
+      setShow = _useState2[1];
+
+  var handleClose = function handleClose() {
+    return setShow(false);
+  };
+
+  var handleShow = function handleShow() {
+    return setShow(true);
+  };
+
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.Fragment, {
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_bootstrap_Navbar__WEBPACK_IMPORTED_MODULE_5__.default, {
       bg: "white",
       variant: "white",
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)(react_bootstrap_Container__WEBPACK_IMPORTED_MODULE_3__.default, {
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)(react_bootstrap_Navbar__WEBPACK_IMPORTED_MODULE_2__.default.Brand, {
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(react_bootstrap_Container__WEBPACK_IMPORTED_MODULE_6__.default, {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(react_bootstrap_Navbar__WEBPACK_IMPORTED_MODULE_5__.default.Brand, {
           href: "/#/homepage",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("img", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("img", {
             alt: "",
             src: _assets_bookworm_icon_svg__WEBPACK_IMPORTED_MODULE_0__.default,
             width: "32",
             height: "32",
             className: "d-inline-block align-top"
           }), "BOOKWORM"]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)(react_bootstrap_Nav__WEBPACK_IMPORTED_MODULE_4__.default, {
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(react_bootstrap_Nav__WEBPACK_IMPORTED_MODULE_4__.default.Link, {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(react_bootstrap_Nav__WEBPACK_IMPORTED_MODULE_7__.default, {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_bootstrap_Nav__WEBPACK_IMPORTED_MODULE_7__.default.Link, {
             href: "/#/homepage",
             children: "Home"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(react_bootstrap_Nav__WEBPACK_IMPORTED_MODULE_4__.default.Link, {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_bootstrap_Nav__WEBPACK_IMPORTED_MODULE_7__.default.Link, {
             href: "/#/shop",
             children: "Shop"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(react_bootstrap_Nav__WEBPACK_IMPORTED_MODULE_4__.default.Link, {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_bootstrap_Nav__WEBPACK_IMPORTED_MODULE_7__.default.Link, {
             href: "/#/aboutus",
             children: "About"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(react_bootstrap_Nav__WEBPACK_IMPORTED_MODULE_4__.default.Link, {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_bootstrap_Nav__WEBPACK_IMPORTED_MODULE_7__.default.Link, {
             href: "#",
             children: "Cart"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(react_bootstrap_esm_Button__WEBPACK_IMPORTED_MODULE_5__.default, {
-            href: "/#/login",
-            children: "Sign in"
-          }), ' ']
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_bootstrap_esm_Button__WEBPACK_IMPORTED_MODULE_8__.default, {
+            variant: "primary",
+            onClick: handleShow,
+            children: "Sign In"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__.default, {
+            show: show,
+            onHide: handleClose,
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__.default.Header, {
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__.default.Title, {
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("h3", {
+                  children: "Sign In"
+                })
+              })
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__.default.Body, {
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_login__WEBPACK_IMPORTED_MODULE_2__.default, {})
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__.default.Footer, {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_bootstrap_esm_Button__WEBPACK_IMPORTED_MODULE_8__.default, {
+                variant: "secondary",
+                onClick: handleClose,
+                children: "Close"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_bootstrap_esm_Button__WEBPACK_IMPORTED_MODULE_8__.default, {
+                variant: "primary",
+                onClick: handleClose,
+                children: "Save Changes"
+              })]
+            })]
+          }), " ", ' ']
         })]
       })
     })
@@ -6475,16 +6532,234 @@ var Shop = /*#__PURE__*/function (_React$Component) {
     _this = _super.call(this, props);
 
     _defineProperty(_assertThisInitialized(_this), "handChangePage", function (e) {
-      _this.getUsersData(e.target.text.split(" ")[0]); //console.log("page",e.target.text.split(" "));
+      _this.setState({
+        currentpage: e.target.text.split(" ")[0]
+      });
+
+      var page = e.target.text.split(" ")[0];
+
+      switch (_this.state.current_sort) {
+        case 'on_sale':
+          _this.sortsale(page);
+
+          break;
+
+        case 'popular':
+          _this.sortpopular(page);
+
+          break;
+
+        case 'price_asc':
+          _this.sortpriceincrease(page);
+
+          break;
+
+        case 'price_desc':
+          _this.sortpricedecrease(page);
+
+          break;
+
+        default:
+          _this.sortsale(page);
+
+      } // switch(this.state.current_cate){
+      //     case '1' :
+      //         this.booksOfCate( ,e.target.text.split(" ")[0] );
+      //     default:
+      //         this.sortsale(e.target.text.split(" ")[0]);
+      // }
+      // console.log("page",e.target.text.split(" "));
 
     });
+
+    _defineProperty(_assertThisInitialized(_this), "sortsale", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+      var pageNumber,
+          sale,
+          sortsale,
+          _args = arguments;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              pageNumber = _args.length > 0 && _args[0] !== undefined ? _args[0] : 1;
+
+              _this.setState({
+                current_sort: 'on_sale'
+              }); // console.log("Running...");
+
+
+              sale = "http://127.0.0.1:8000/api/books/onsale?page=".concat(pageNumber);
+              _context.next = 5;
+              return axios__WEBPACK_IMPORTED_MODULE_4___default().get(sale);
+
+            case 5:
+              sortsale = _context.sent;
+
+              // console.log('d',pag);
+              _this.setState({
+                bookListPage: sortsale.data
+              });
+
+            case 7:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    })));
+
+    _defineProperty(_assertThisInitialized(_this), "sortpopular", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+      var pageNumber,
+          sale,
+          sortsale,
+          _args2 = arguments;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              pageNumber = _args2.length > 0 && _args2[0] !== undefined ? _args2[0] : 1;
+
+              //console.log("run");
+              _this.setState({
+                current_sort: 'popular'
+              }); // console.log("Running...");
+
+
+              sale = "http://127.0.0.1:8000/api/books/onpopular?page=".concat(pageNumber);
+              _context2.next = 5;
+              return axios__WEBPACK_IMPORTED_MODULE_4___default().get(sale);
+
+            case 5:
+              sortsale = _context2.sent;
+
+              // console.log('d',pag);
+              _this.setState({
+                bookListPage: sortsale.data
+              });
+
+            case 7:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2);
+    })));
+
+    _defineProperty(_assertThisInitialized(_this), "sortpricedecrease", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
+      var pageNumber,
+          sortdecrease,
+          decrease,
+          _args3 = arguments;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
+        while (1) {
+          switch (_context3.prev = _context3.next) {
+            case 0:
+              pageNumber = _args3.length > 0 && _args3[0] !== undefined ? _args3[0] : 1;
+              _this.state.current_sort = 'price_desc'; // console.log("Running...");
+
+              sortdecrease = "http://127.0.0.1:8000/api/books/pricedecrease?page=".concat(pageNumber);
+              _context3.next = 5;
+              return axios__WEBPACK_IMPORTED_MODULE_4___default().get(sortdecrease);
+
+            case 5:
+              decrease = _context3.sent;
+
+              // console.log('d',pag);
+              _this.setState({
+                bookListPage: decrease.data
+              });
+
+            case 7:
+            case "end":
+              return _context3.stop();
+          }
+        }
+      }, _callee3);
+    })));
+
+    _defineProperty(_assertThisInitialized(_this), "sortpriceincrease", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
+      var pageNumber,
+          sortincrease,
+          increase,
+          _args4 = arguments;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
+        while (1) {
+          switch (_context4.prev = _context4.next) {
+            case 0:
+              pageNumber = _args4.length > 0 && _args4[0] !== undefined ? _args4[0] : 1;
+              _this.state.current_sort = 'price_asc'; // console.log("Running...");
+
+              sortincrease = "./api/books/priceincrease?page=".concat(pageNumber);
+              _context4.next = 5;
+              return axios__WEBPACK_IMPORTED_MODULE_4___default().get(sortincrease);
+
+            case 5:
+              increase = _context4.sent;
+
+              // console.log('d',pag);
+              _this.setState({
+                bookListPage: increase.data
+              });
+
+            case 7:
+            case "end":
+              return _context4.stop();
+          }
+        }
+      }, _callee4);
+    })));
+
+    _defineProperty(_assertThisInitialized(_this), "booksOfCate", /*#__PURE__*/function () {
+      var _ref5 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee5(e) {
+        var pageNumber,
+            cate1,
+            bookcate,
+            _args5 = arguments;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee5$(_context5) {
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+                pageNumber = _args5.length > 1 && _args5[1] !== undefined ? _args5[1] : 1;
+                console.log("Runningg...", e);
+
+                _this.setState({
+                  current_cate: e
+                });
+
+                cate1 = "./api/category/".concat(e, "/books?page=").concat(pageNumber);
+                _context5.next = 6;
+                return axios__WEBPACK_IMPORTED_MODULE_4___default().get(cate1);
+
+              case 6:
+                bookcate = _context5.sent;
+
+                _this.setState({
+                  bookListPage: bookcate.data
+                });
+
+              case 8:
+              case "end":
+                return _context5.stop();
+            }
+          }
+        }, _callee5);
+      }));
+
+      return function (_x) {
+        return _ref5.apply(this, arguments);
+      };
+    }());
 
     _this.state = {
       booklist: [],
       bookListPage: [],
       categories: [],
       authors: [],
-      links: []
+      sortsale: [],
+      links: [],
+      current_sort: 'on_sale',
+      current_cate: '',
+      current_page: '1'
     };
     return _this;
   }
@@ -6492,15 +6767,15 @@ var Shop = /*#__PURE__*/function (_React$Component) {
   _createClass(Shop, [{
     key: "componentDidMount",
     value: function () {
-      var _componentDidMount = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+      var _componentDidMount = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee6() {
         var _this2 = this;
 
         var getlink, category, author;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee6$(_context6) {
           while (1) {
-            switch (_context.prev = _context.next) {
+            switch (_context6.prev = _context6.next) {
               case 0:
-                _context.next = 2;
+                _context6.next = 2;
                 return axios__WEBPACK_IMPORTED_MODULE_4___default().get('http://127.0.0.1:8000/api/books/onsale').then(function (respone) {
                   _this2.setState({
                     links: respone.link
@@ -6508,8 +6783,8 @@ var Shop = /*#__PURE__*/function (_React$Component) {
                 });
 
               case 2:
-                getlink = _context.sent;
-                _context.next = 5;
+                getlink = _context6.sent;
+                _context6.next = 5;
                 return axios__WEBPACK_IMPORTED_MODULE_4___default().get(' http://127.0.0.1:8000/api/categories').then(function (respone) {
                   _this2.setState({
                     categories: respone.data
@@ -6517,8 +6792,8 @@ var Shop = /*#__PURE__*/function (_React$Component) {
                 });
 
               case 5:
-                category = _context.sent;
-                _context.next = 8;
+                category = _context6.sent;
+                _context6.next = 8;
                 return axios__WEBPACK_IMPORTED_MODULE_4___default().get('http://127.0.0.1:8000/api/authors').then(function (respone) {
                   _this2.setState({
                     authors: respone.data
@@ -6526,16 +6801,16 @@ var Shop = /*#__PURE__*/function (_React$Component) {
                 });
 
               case 8:
-                author = _context.sent;
-                _context.next = 11;
-                return Promise.all([getlink, category, author, this.getUsersData()]);
+                author = _context6.sent;
+                _context6.next = 11;
+                return Promise.all([getlink, category, author, this.sortsale()]);
 
               case 11:
               case "end":
-                return _context.stop();
+                return _context6.stop();
             }
           }
-        }, _callee, this);
+        }, _callee6, this);
       }));
 
       function componentDidMount() {
@@ -6543,45 +6818,8 @@ var Shop = /*#__PURE__*/function (_React$Component) {
       }
 
       return componentDidMount;
-    }()
-  }, {
-    key: "getUsersData",
-    value: function () {
-      var _getUsersData = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
-        var pageNumber,
-            url,
-            pag,
-            _args2 = arguments;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                pageNumber = _args2.length > 0 && _args2[0] !== undefined ? _args2[0] : 1;
-                url = "http://127.0.0.1:8000/api/books/onsale?page=".concat(pageNumber);
-                _context2.next = 4;
-                return axios__WEBPACK_IMPORTED_MODULE_4___default().get(url);
+    }() // http://127.0.0.1:8000/#/shop?cate
 
-              case 4:
-                pag = _context2.sent;
-                // console.log('d',pag);
-                this.setState({
-                  bookListPage: pag.data
-                });
-
-              case 6:
-              case "end":
-                return _context2.stop();
-            }
-          }
-        }, _callee2, this);
-      }));
-
-      function getUsersData() {
-        return _getUsersData.apply(this, arguments);
-      }
-
-      return getUsersData;
-    }()
   }, {
     key: "renderUserList",
     value: function renderUserList() {
@@ -6589,8 +6827,8 @@ var Shop = /*#__PURE__*/function (_React$Component) {
       var bookListPage = this.state.bookListPage; //console.log('rf',bookListPage);
 
       var bookList = bookListPage.data; //console.log(typeof bookList)
-      //console.log(bookList);
-      // console.log(products);
+
+      console.log(bookList); // console.log(products);
 
       return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(react__WEBPACK_IMPORTED_MODULE_3__.Fragment, {
         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
@@ -6697,7 +6935,9 @@ var Shop = /*#__PURE__*/function (_React$Component) {
                                 return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("tr", {
                                   children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("td", {
                                     children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("a", {
-                                      href: "#",
+                                      onClick: function onClick() {
+                                        return _this3.booksOfCate(cate.id);
+                                      },
                                       children: cate.category_name
                                     })
                                   })
@@ -6839,25 +7079,33 @@ var Shop = /*#__PURE__*/function (_React$Component) {
                           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("li", {
                             children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("a", {
                               "class": "dropdown-item",
-                              href: "#",
+                              onClick: function onClick() {
+                                return _this3.sortsale();
+                              },
                               children: "Sort By Sale"
                             })
                           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("li", {
                             children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("a", {
                               "class": "dropdown-item",
-                              href: "#",
-                              children: "Sort By Review"
+                              onClick: function onClick() {
+                                return _this3.sortpopular();
+                              },
+                              children: "Sort By Popular"
                             })
                           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("li", {
                             children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("a", {
                               "class": "dropdown-item",
-                              href: "#",
+                              onClick: function onClick() {
+                                return _this3.sortpriceincrease();
+                              },
                               children: "Sort By Price Low to High"
                             })
                           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("li", {
                             children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("a", {
                               "class": "dropdown-item",
-                              href: "#",
+                              onClick: function onClick() {
+                                return _this3.sortpricedecrease();
+                              },
                               children: "Sort By Price High to Low"
                             })
                           })]
@@ -6881,19 +7129,19 @@ var Shop = /*#__PURE__*/function (_React$Component) {
                           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("li", {
                             children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("a", {
                               "class": "dropdown-item",
-                              href: "/shop-page?how=10",
+                              href: "#",
                               children: "10"
                             })
                           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("li", {
                             children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("a", {
                               "class": "dropdown-item",
-                              href: "/shop-page?how=20",
+                              href: "#",
                               children: "20"
                             })
                           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("li", {
                             children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("a", {
                               "class": "dropdown-item",
-                              href: "/shop-page?how=30",
+                              href: "#",
                               children: "30"
                             })
                           })]
@@ -7094,10 +7342,7 @@ function Login() {
       className: "Auth-form",
       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
         className: "Auth-form-content",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h3", {
-          className: "Auth-form-title",
-          children: "Sign In"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
           className: "form-group mt-3",
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("label", {
             children: "Email address"
@@ -7713,7 +7958,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".App {\r\n    background-color: white;\r\n  }\r\n  \r\n  .Auth-form-container {\r\n    display: flex;\r\n    justify-content: center;\r\n    align-items: center;\r\n    width: 100vw;\r\n    height: 100vh;\r\n    margin-top: -100px;\r\n  }\r\n  \r\n  .Auth-form {\r\n    width: 420px;\r\n    box-shadow: rgb(0 0 0 / 16%) 1px 1px 10px;\r\n    padding-top: 30px;\r\n    padding-bottom: 20px;\r\n    border-radius: 8px;\r\n    background-color: white;\r\n  }\r\n  \r\n  .Auth-form-content {\r\n    padding-left: 12%;\r\n    padding-right: 12%;\r\n  }\r\n  \r\n  .Auth-form-title {\r\n    text-align: center;\r\n    margin-bottom: 1em;\r\n    font-size: 24px;\r\n    color: rgb(34, 34, 34);\r\n    font-weight: 800;\r\n  }\r\n  \r\n  label {\r\n    font-size: 14px;\r\n    font-weight: 600;\r\n    color: rgb(34, 34, 34);\r\n  }\r\n  .d-grid{\r\n    padding-right: 20%;\r\n  }", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".App {\r\n    background-color: white;\r\n  }\r\n  \r\n  .Auth-form-container {\r\n    display: flex;\r\n    justify-content: center;\r\n    align-items: center;\r\n    width: 100vw;\r\n    height: 100vh;\r\n    margin-top: -100px;\r\n    margin-left: -450px;\r\n  }\r\n  \r\n  .Auth-form {\r\n    width: 420px;\r\n    box-shadow: rgb(0 0 0 / 16%) 1px 1px 10px;\r\n    padding-top: 30px;\r\n    padding-bottom: 20px;\r\n    border-radius: 8px;\r\n    background-color: white;\r\n  }\r\n  \r\n  .Auth-form-content {\r\n    padding-left: 12%;\r\n    padding-right: 12%;\r\n  }\r\n  \r\n  .Auth-form-title {\r\n    text-align: center;\r\n    margin-bottom: 1em;\r\n    font-size: 24px;\r\n    color: rgb(34, 34, 34);\r\n    font-weight: 800;\r\n  }\r\n  \r\n  label {\r\n    font-size: 14px;\r\n    font-weight: 600;\r\n    color: rgb(34, 34, 34);\r\n  }\r\n  .d-grid{\r\n    padding-right: 20%;\r\n  }\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

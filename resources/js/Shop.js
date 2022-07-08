@@ -15,8 +15,11 @@ class Shop extends React.Component {
             bookListPage:[],
             categories:[],
             authors:[],
+            sortsale:[],
             links:[],
-        
+            current_sort: 'on_sale',
+            current_cate: '',
+            current_page:'1',
         };
     }
     async componentDidMount(){
@@ -29,22 +32,82 @@ class Shop extends React.Component {
         const author = await axios.get('http://127.0.0.1:8000/api/authors').then(respone=>{
             this.setState({authors:respone.data});
         });
-        await Promise.all([getlink,category,author,this.getUsersData()]);
+        await Promise.all([getlink,category,author,this.sortsale()]);
         
     }
-    async getUsersData(pageNumber=1){
-        const url = `http://127.0.0.1:8000/api/books/onsale?page=${pageNumber}`;
-        const pag = await axios.get(url);
-        // console.log('d',pag);
-        this.setState({bookListPage: pag.data});
-    }
+    // http://127.0.0.1:8000/#/shop?cate
 
     handChangePage = (e) => {
-    
-        this.getUsersData(e.target.text.split(" ")[0]);
-        //console.log("page",e.target.text.split(" "));
+        this.setState({ currentpage: e.target.text.split(" ")[0] });
+        const page = e.target.text.split(" ")[0];
+        switch(this.state.current_sort) {
+            case 'on_sale':
+                this.sortsale(page);
+                break;
+            case 'popular':
+                this.sortpopular(page);
+                break;
+
+            case 'price_asc':
+                this.sortpriceincrease(page);
+                break;
+            case 'price_desc':
+                this.sortpricedecrease(page);
+                break;
+            default:
+                this.sortsale(page);
+
+        }
+
+        // switch(this.state.current_cate){
+        //     case '1' :
+        //         this.booksOfCate( ,e.target.text.split(" ")[0] );
+        //     default:
+        //         this.sortsale(e.target.text.split(" ")[0]);
+        // }
+        // console.log("page",e.target.text.split(" "));
      
      }
+     sortsale = async (pageNumber =1) => {
+        this.setState({ current_sort: 'on_sale' });
+        // console.log("Running...");
+        const sale = `http://127.0.0.1:8000/api/books/onsale?page=${pageNumber}`;
+        const sortsale = await axios.get(sale);
+        // console.log('d',pag);
+        this.setState({bookListPage: sortsale.data});
+    }
+    sortpopular = async (pageNumber =1) => {
+        //console.log("run");
+        this.setState({ current_sort: 'popular' });
+        // console.log("Running...");
+        const sale = `http://127.0.0.1:8000/api/books/onpopular?page=${pageNumber}`;
+        const sortsale = await axios.get(sale);
+        // console.log('d',pag);
+        this.setState({bookListPage: sortsale.data});
+    }
+    sortpricedecrease = async (pageNumber =1) => {
+        this.state.current_sort ='price_desc'
+        // console.log("Running...");
+        const sortdecrease = `http://127.0.0.1:8000/api/books/pricedecrease?page=${pageNumber}`;
+        const decrease = await axios.get(sortdecrease);
+        // console.log('d',pag);
+        this.setState({bookListPage: decrease.data});
+    }
+    sortpriceincrease = async (pageNumber =1) => {
+        this.state.current_sort ='price_asc'
+        // console.log("Running...");
+        const sortincrease = `./api/books/priceincrease?page=${pageNumber}`;
+        const increase = await axios.get(sortincrease);
+        // console.log('d',pag);
+        this.setState({bookListPage: increase.data});
+    }
+    booksOfCate = async (e,pageNumber=1)=>{
+        console.log("Runningg...",e);
+        this.setState({ current_cate: e }) ;
+        const cate1 = `./api/category/${e}/books?page=${pageNumber}`;
+        const bookcate = await axios.get(cate1);
+        this.setState({bookListPage: bookcate.data});
+    }
 
     renderUserList(){
         
@@ -55,9 +118,8 @@ class Shop extends React.Component {
         const  bookList=bookListPage.data;
         //console.log(typeof bookList)
 
-        //console.log(bookList);
+        console.log(bookList);
         // console.log(products);
-
       
         return (
             <React.Fragment>
@@ -121,7 +183,7 @@ class Shop extends React.Component {
                                                 {
                                                     this.state.categories.map(cate => {
                                                         return (
-                                                            <tr><td><a href="#">{cate.category_name}</a></td></tr>
+                                                            <tr><td><a onClick ={()=>this.booksOfCate(cate.id)}>{cate.category_name}</a></td></tr>
                                                         )
                                                     })
                                                 }
@@ -190,10 +252,10 @@ class Shop extends React.Component {
                                            Sort By 
                                         </button>
                                         <ul class="dropdown-menu" aria-labelledby="defaultDropdown">
-                                            <li><a class="dropdown-item" href="#">Sort By Sale</a></li>
-                                            <li><a class="dropdown-item" href="#">Sort By Review</a></li>
-                                            <li><a class="dropdown-item" href="#">Sort By Price Low to High</a></li>
-                                            <li><a class="dropdown-item" href="#">Sort By Price High to Low</a></li>
+                                            <li><a class="dropdown-item" onClick ={()=>this.sortsale()}>Sort By Sale</a></li>
+                                            <li><a class="dropdown-item" onClick ={()=>this.sortpopular()}>Sort By Popular</a></li>
+                                            <li><a class="dropdown-item" onClick ={()=>this.sortpriceincrease()}>Sort By Price Low to High</a></li>
+                                            <li><a class="dropdown-item" onClick ={()=>this.sortpricedecrease()}>Sort By Price High to Low</a></li>
                                         </ul>
                                     </div>
                                    
@@ -208,9 +270,9 @@ class Shop extends React.Component {
                                         Show
                                     </button>
                                     <ul class="dropdown-menu" aria-labelledby="defaultDropdown">
-                                        <li><a class="dropdown-item" href="/shop-page?how=10">10</a></li>
-                                        <li><a class="dropdown-item" href="/shop-page?how=20">20</a></li>
-                                        <li><a class="dropdown-item" href="/shop-page?how=30">30</a></li>
+                                        <li><a class="dropdown-item" href="#">10</a></li>
+                                        <li><a class="dropdown-item" href="#">20</a></li>
+                                        <li><a class="dropdown-item" href="#">30</a></li>
                                     </ul>
                                     </div>
                                     </div>

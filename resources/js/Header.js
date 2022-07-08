@@ -4,7 +4,17 @@ import Navbar from 'react-bootstrap/Navbar';
 import Button from 'react-bootstrap/esm/Button';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import logo from '../assets/bookworm_icon.svg'  ;
+import { useState } from 'react';
+import { Modal } from 'react-bootstrap';
+import Login from './login';
+import { CloseButton } from 'react-bootstrap';
+import '../css/login.css'
 function Header() {
+      const [show, setShow] = useState(false);
+
+      const handleClose = () => setShow(false);
+      const handleShow = () => setShow(true);
+  
     return (
         <>
           <Navbar bg="white" variant="white">
@@ -24,7 +34,27 @@ function Header() {
                     <Nav.Link href="/#/shop">Shop</Nav.Link>
                     <Nav.Link href="/#/aboutus">About</Nav.Link>
                     <Nav.Link href="#">Cart</Nav.Link>
-                    <Button href="/#/login">Sign in</Button>{' '} 
+                    {/* <Button href="/#/login">Sign in</Button>{' '} */}
+                    <Button variant="primary" onClick={handleShow}>
+                      Sign In
+                    </Button>
+
+                    <Modal show={show} onHide={handleClose}>
+                      <Modal.Header >
+                        <Modal.Title><h3>Sign In</h3></Modal.Title>
+                      </Modal.Header>
+                      <Modal.Body><Login/></Modal.Body>
+                      <Modal.Footer>
+                        <Button variant="secondary" onClick={handleClose}>
+                          Close
+                        </Button>
+                        <Button variant="primary" onClick={handleClose}>
+                          Save Changes
+                        </Button>
+                      </Modal.Footer>
+                    </Modal> {' '}
+                    
+
                 </Nav>  
                 
             </Container>

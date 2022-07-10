@@ -20,6 +20,10 @@ class Shop extends React.Component {
             current_sort: 'on_sale',
             current_cate: '',
             current_page:'1',
+            current_cate_id:'',
+            book_paginate:'',
+            current_author: '',
+            current_author_id:'',
         };
     }
     async componentDidMount(){
@@ -40,24 +44,32 @@ class Shop extends React.Component {
     handChangePage = (e) => {
         this.setState({ currentpage: e.target.text.split(" ")[0] });
         const page = e.target.text.split(" ")[0];
-        switch(this.state.current_sort) {
-            case 'on_sale':
-                this.sortsale(page);
-                break;
-            case 'popular':
-                this.sortpopular(page);
-                break;
-
-            case 'price_asc':
-                this.sortpriceincrease(page);
-                break;
-            case 'price_desc':
-                this.sortpricedecrease(page);
-                break;
-            default:
-                this.sortsale(page);
-
+        if(this.state.current_cate ==='' && this.state.current_author === ''){
+            switch(this.state.current_sort) {
+                case 'on_sale':
+                    this.sortsale(page);
+                    break;
+                case 'popular':
+                    this.sortpopular(page);
+                    break;
+                case 'price_asc':
+                    this.sortpriceincrease(page);
+                    break;
+                case 'price_desc':
+                    this.sortpricedecrease(page);
+                    break;
+                default:
+                    this.sortsale(page);
+            }
+        
         }
+        if(this.state.current_cate !== ''){
+            this.booksOfCate(this.state.current_cate_id,page)
+        }
+        if(this.state.current_author !== ''){
+            this.booksOfAuthor(this.state.current_author_id,page)
+        }
+
 
         // switch(this.state.current_cate){
         //     case '1' :
@@ -103,10 +115,21 @@ class Shop extends React.Component {
     }
     booksOfCate = async (e,pageNumber=1)=>{
         console.log("Runningg...",e);
-        this.setState({ current_cate: e }) ;
+        console.log("Page",pageNumber);
+        this.setState({ current_cate_id: e }) ;
+        this.setState({ current_cate: 'cate' }) ;
         const cate1 = `./api/category/${e}/books?page=${pageNumber}`;
         const bookcate = await axios.get(cate1);
         this.setState({bookListPage: bookcate.data});
+    }
+    booksOfAuthor = async (e,pageNumber=1)=>{
+        console.log("Runningg...",e);
+        console.log("Page",pageNumber);
+        this.setState({ current_author_id: e }) ;
+        this.setState({ current_author: 'auth' }) ;
+        const auth = `./api/author/${e}/books?page=${pageNumber}`;
+        const bookauth = await axios.get(auth);
+        this.setState({bookListPage: bookauth.data});
     }
 
     renderUserList(){
@@ -119,6 +142,7 @@ class Shop extends React.Component {
         //console.log(typeof bookList)
 
         console.log(bookList);
+        
         // console.log(products);
       
         return (
@@ -154,7 +178,7 @@ class Shop extends React.Component {
     render() {
         const {users} = this.state ;
         const bookListPage =  (this.state.bookListPage);
-        const bookPageination=bookListPage.links;
+        const bookPageination=bookListPage.last_page;
         return (
             <section> 
                 <div className="container">
@@ -205,7 +229,7 @@ class Shop extends React.Component {
                                                 {
                                                     this.state.authors.map(auth => {
                                                         return (
-                                                            <tr><td><a href="#">{auth.author_name}</a></td></tr>
+                                                            <tr><td><a onClick ={()=>this.booksOfAuthor(auth.id)}>{auth.author_name}</a></td></tr>
                                                         )
                                                     })
                                                 }
@@ -283,23 +307,6 @@ class Shop extends React.Component {
                                 <div class="card card-body">
                                     
                             <div id="mainRow" className="row">
-                                
-                                    {/* // this.state.booklist.map(book1 => {
-                                    //     console.log('dj',{book1});
-                                    //     return (
-                                    //     <div className="col-lg-3 col-md-4 col-sm-6 mb-4" key={book1}>
-                                    //         <div className="card">
-                                    //         <img className="card-img-top img-fluid" src={bookCoverPhoto[book1.book_cover_photo]} alt={book1.book_cover_photo} />
-                                    //             <div className="card-body">
-                                    //             <a href="/#/product/id" className="text-decoration-none"><p className="book-title font-18px ">{book1.book_title}</p></a>
-                                    //                 <p className="book-author font-14px">{book1.author_name}</p>
-                                    //             </div>
-                                    //             <div className="card-footer text-muted font-14px"><strike>{book1.book_price}$</strike>&nbsp;<b>{book1.finalprice}$</b></div>
-                                    //         </div>
-                                    //     </div>
-                                    //     )
-                                    // }) */}
-
                                     {this.renderUserList()}
                                 
                             </div>
@@ -308,27 +315,31 @@ class Shop extends React.Component {
                                 </div>
 
                                 <div className="pag"style={{ display: 'block', width: 700, padding: 30 }}>
-                    <Pagination>
+                        <Pagination>
                         {/* <Pagination.Prev />
                         <Pagination.Ellipsis /> */}
                         {
-                            
-                             
-                            (bookPageination && bookPageination.map((link,index)=>{
 
-                                return( <Pagination.Item
-                                key={`${index}`}
+                             
+                            (bookPageination && Array.apply(null, Array(bookPageination)).map((val, idx)=>{
+
+
+                                return( 
+                                <Pagination.Item
+                                key={`${idx}`}
                                 onClick={(e) => this.handChangePage(e)}                        
                                 > 
-                                {index+1} 
+                                {
+                                    idx+1 
+                                }
+                                 
                                 
                                 </Pagination.Item>)
                                
                             }))
                         }
-                        {/* <Pagination.Ellipsis />
-                        <Pagination.Next /> */}
-                    </Pagination>
+                    </Pagination>                                
+
                     </div>
                             </div>
                         </div>

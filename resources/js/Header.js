@@ -33,7 +33,7 @@ function Header() {
                     <Nav.Link href="/#/homepage">Home</Nav.Link>  
                     <Nav.Link href="/#/shop">Shop</Nav.Link>
                     <Nav.Link href="/#/aboutus">About</Nav.Link>
-                    <Nav.Link href="#">Cart</Nav.Link>
+                    <Nav.Link href="/#/cart">Cart</Nav.Link>
                     {/* <Button href="/#/login">Sign in</Button>{' '} */}
                     <Button variant="primary" onClick={handleShow}>
                       Sign In

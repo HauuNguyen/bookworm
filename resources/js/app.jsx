@@ -10,6 +10,7 @@ import Shop from './Shop';
 import Login from './login';
 import Popular from './popular';
 import Recommend from './recommend';
+import Cart from './Cartpage' ;
 ReactDOM.render( 
     
     <HashRouter>
@@ -17,11 +18,12 @@ ReactDOM.render(
         <Routes>
             <Route path = "/homepage"   element={<Home />}>     </Route>
             <Route path = "/aboutus"    element={<About />}>    </Route>
-            <Route path = "/product/:id"    element={<Product/>}>   </Route>
+            <Route path = "/product/:id"element={<Product/>}>   </Route>
             <Route path = "/shop"       element={<Shop/>}>      </Route>
             <Route path = "/login"      element={<Login/>}>      </Route>
             <Route path = "/popular"    element={<Popular/>}>      </Route>
             <Route path = "/recommend"  element={<Recommend/>}>      </Route>
+            <Route path = "/cart"       element={<Cart/>}>      </Route>
         </Routes>
         <Footer />
     </HashRouter>,

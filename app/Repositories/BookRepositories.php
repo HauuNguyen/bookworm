@@ -102,8 +102,8 @@ class BookRepositories {
         })
         ->join('author','author.id','book.author_id')
         ->join('category','book.category_id','=','category.id')
-        ->select('book.book_title','author.author_name','book.book_price','book.book_cover_photo','recommend.finalprice')
-        ->groupBy('book.book_title','author.id','book.book_price','book.book_cover_photo','recommend.finalprice')
+        ->select('book.book_title','book.id','author.author_name','book.book_price','book.book_cover_photo','recommend.finalprice')
+        ->groupBy('book.book_title','book.id','author.id','book.book_price','book.book_cover_photo','recommend.finalprice')
         ->where('category_id', $category_id)->paginate(12);
         return $recommend;
     }
@@ -117,8 +117,27 @@ class BookRepositories {
     }    
     public function getAllBooksOfAuthor($author_id)
     {
-        $authId = $this->query->where('author_id', $author_id)->get();
-        return $authId;
+        $recommend = $this->query 
+        ->  leftJoin('discount','book.id','=','discount.book_id')
+        ->  selectRaw('book.id,
+            (case  when    discount.discount_start_date <= current_date
+                    and (   discount.discount_end_date >= current_date or 
+                            discount.discount_end_date is null )    
+                    then discount.discount_price
+                    else book.book_price end  ) as finalprice
+            '
+        )
+        ->groupBy('book.id','finalprice') ;
+        $recommend = $this->query
+        -> joinSub($recommend,'recommend',function ($join){
+            $join-> on('recommend.id','=','book.id') ;
+        })
+        ->join('author','author.id','book.author_id')
+        ->join('category','book.category_id','=','category.id')
+        ->select('book.book_title','book.id','author.author_name','book.book_price','book.book_cover_photo','recommend.finalprice')
+        ->groupBy('book.book_title','book.id','author.id','book.book_price','book.book_cover_photo','recommend.finalprice')
+        ->where('author_id', $author_id)->paginate(12);
+        return $recommend;
     }
     public function getTop10DiscountBooks(){
         $recommend = $this->query

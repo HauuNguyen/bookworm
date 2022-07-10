@@ -7,6 +7,7 @@ import axios from 'axios';
 import { bookCoverPhoto } from "./bookcoverphoto";
 
 function Product() {
+
     const id = window.location.href.split("http://127.0.0.1:8000/#/product/");
     const numid = id[1];
         const darta = [
@@ -22,7 +23,7 @@ function Product() {
             .catch((error)=>console.log(error));
     }, []);
     
-    return (
+   return (
 
         <div className="container">
         {   bookdetail.map((books)=>
@@ -34,9 +35,18 @@ function Product() {
                     </div>
                 <div className="row m-0">
                     <div className="col-lg-4 left-side-product-box pb-3" key={books}>
+                        <div className='imgfix'>
                         <img   src={bookCoverPhoto[books.book_cover_photo]} alt={books.book_cover_photo}className="border p-3"/> 
+
+                        </div>
+                        <div className='pfix'>
+                        <p>By (author):{books.author_name}</p>
+                        </div>
+                        
                     </div>
-                <div className="col-lg-8">
+                    
+                    <div className="col-lg-8">
+                    <div className='fixcol'>
                     <div className="right-side-pro-detail border p-3 m-0">
                         <div className="row">
                             <div className="col-lg-12 pt-2">
@@ -48,6 +58,8 @@ function Product() {
                         </div>
                     </div>
                 </div>
+                    </div>
+
                 </div>
             </div>
             </div>
@@ -76,8 +88,8 @@ function Product() {
 
                     </div>
                     <br></br>
-                    <div>
-                    <button type="button" className="btn btn-primary">Add to Cart</button>
+                    <div className='btnfix'>
+                    <button type="button" className="btn btn-primary ">Add to Cart</button>
                     </div>
                 </div>
             </div>
@@ -94,6 +106,7 @@ function Product() {
         
 
       );
+
 }
 
 

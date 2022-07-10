@@ -12,14 +12,14 @@ body {
   }
 .main-section1 {
     left: 50%;
-    right: 50%;
+    margin-left:80px;
     transform: translate(40%, 5%);
 }
 .main-section {
-    margin-left: 65%;
+    margin-left: 150%;
     margin-right: 10%;
     transform: translate(-50%, 5%);
-    width: 125%;
+    width: 350%;
     height: 100%;
 }
 .col {
@@ -32,12 +32,17 @@ body {
 .left-side-product-box p{
     text-align: right;
     font-size: small;
+    margin-right: 67px;
+    padding-right: 20%;
 }
 
 .right-side-pro-detail span {
     font-size: 15px;
 
     
+}
+.fixcol{
+  margin-left:-100px;
 }
 
 .right-side-pro-detail p {
@@ -65,6 +70,9 @@ body {
         height: auto;
     }
 }
+.btnfix {
+  margin-left: 71px;
+}
 .column {
     float: left;
     width: 70%;
@@ -80,11 +88,14 @@ body {
   }
   
   .column1 {
-    flex: 50%;
+    padding-left: -10%;
+    margin-right: 300px;
+    flex: 10%;
     
   }
   .column2{
-    flex: 50%;
+    margin-left: -110px;
+    width: 600px;
   }
   .woocommerce-variation-add-to-cart {
     display: flex;
@@ -101,6 +112,9 @@ body {
   .quantitycart{
     padding-left: 10%;
   }
-  .btn {
-    margin-left: 80px;
+
+  .imgfix img{
+    height: 100px;
+    width: 100px;
   }
+ 
